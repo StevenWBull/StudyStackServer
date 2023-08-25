@@ -8,12 +8,13 @@
         "start": "node server.js",
         "dev": "nodemon server.js",
         "lint": "eslint .",
-        "format": "prettier --write '**/*.{js,json}'"
+        "format": "prettier --write '**/*.{js,json}'",
+        "prepare": "husky install"
     },
     "husky": {
-      "hooks": {
-        "precommit": "npm run lint"
-      }
+        "hooks": {
+            "pre-commit": "npm run lint"
+        }
     },
     "author": "",
     "license": "MIT",
