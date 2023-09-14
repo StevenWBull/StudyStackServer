@@ -51,8 +51,6 @@ const loginUser = async (req, res) => {
                 message: `User ${loginInfo.first_name} logged in.`,
                 login: loginInfo,
             });
-        } else {
-            return res.status(401).json({ error: 'Invalid credentials.' });
         }
     } catch (error) {
         return res
