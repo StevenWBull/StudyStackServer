@@ -3,7 +3,7 @@ const User = require('../model/userSchema');
 // Middleware to verify if user can update email and/or password
 const verifyUserUpdate = () => {
     return async (req, res, next) => {
-        // Get email and from request body
+        // Get credientials from request body
         const userID = req.body.user_id;
         const email = req.body.email;
         const current_password = req.body.pword;

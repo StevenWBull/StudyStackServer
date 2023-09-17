@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const cardAnswerSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    created_at: {
+    created_at_date: {
+        type: String,
+        default: new Date().toDateString(),
+    },
+    created_at_time: {
         type: String,
         default: new Date().toTimeString(),
     },
@@ -15,7 +19,11 @@ const cardAnswerSchema = new Schema({
 
 const cardSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    created_at: {
+    created_at_date: {
+        type: String,
+        default: new Date().toDateString(),
+    },
+    created_at_time: {
         type: String,
         default: new Date().toTimeString(),
     },
@@ -32,7 +40,11 @@ const cardSchema = new Schema({
 
 const stackSchema = Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    created_at: {
+    created_at_date: {
+        type: String,
+        default: new Date().toDateString(),
+    },
+    created_at_time: {
         type: String,
         default: new Date().toTimeString(),
     },
@@ -45,7 +57,11 @@ const stackSchema = Schema({
 
 const categorySchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    created_at: {
+    created_at_date: {
+        type: String,
+        default: new Date().toDateString(),
+    },
+    created_at_time: {
         type: String,
         default: new Date().toTimeString(),
     },
@@ -58,7 +74,11 @@ const categorySchema = new Schema({
 
 const userSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    created_at: {
+    created_at_date: {
+        type: String,
+        default: new Date().toDateString(),
+    },
+    created_at_time: {
         type: String,
         default: new Date().toTimeString(),
     },
