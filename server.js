@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Routes
-app.use('/v1/auth', require('./routes/api/authRoutes'));
+app.use('/auth', require('./routes/api/authRoutes'));
 
 mongoose.connection.once('open', () => {
     console.log('MongoDB connected!');
