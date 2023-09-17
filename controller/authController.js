@@ -70,4 +70,5 @@ const logoutUser = async (req, res) => {
             .json({ error: 'Could not log out.', error: error.message });
     }
 };
+
 module.exports = { addRegisteredUser, loginUser, logoutUser };
