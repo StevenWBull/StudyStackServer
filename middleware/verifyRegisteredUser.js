@@ -13,7 +13,7 @@ const verifyRegisteredUser = () => {
         // If document exists
         if (existingUser) {
             return res.status(400).json({
-                error: `User ${req.body.first_name} is already registered.`,
+                error: `User is already registered.`,
             });
         }
         next();
