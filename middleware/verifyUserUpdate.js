@@ -4,9 +4,10 @@ const User = require('../model/userSchema');
 const verifyUserUpdate = () => {
     return async (req, res, next) => {
         // Get credientials from request body
-        const userID = req.body.user_id;
+        const userID = req.body._id;
         const email = req.body.email;
         const current_password = req.body.pword;
+        const new_password = req.body.new_pword;
 
         try {
             // Check users collection for a document
@@ -14,17 +15,24 @@ const verifyUserUpdate = () => {
                 _id: userID,
             }).exec();
 
-            // If document exists with an email, cannot update
+            // If document exists with an email
             if (existingDoc.email === email) {
                 return res.status(400).json({
-                    error: `Email ${req.body.email} already exists.`,
+                    error: `Email already exists for user.`,
                 });
             }
 
             // Current_password does not exist in document, cannot update
             if (existingDoc.pword !== current_password) {
                 return res.status(400).json({
-                    error: `Password ${current_password} is not an existing password.`,
+                    error: `Password is not an existing password for user.`,
+                });
+            }
+
+            // Current_password is same as new_password, cannot update
+            if (existingDoc.pword === new_password) {
+                return res.status(400).json({
+                    error: `New password is the same as current password.`,
                 });
             }
         } catch (error) {
