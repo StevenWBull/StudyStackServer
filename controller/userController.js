@@ -1,6 +1,54 @@
 const User = require('../model/userSchema');
 const mongoose = require('mongoose');
 
+const updateUserInfo = async (req, res) => {
+    // Get Crendientals from request body
+    const newFirstName = req.body.first_name;
+    const newLastName = req.body.last_name;
+    const newEmail = req.body.email;
+    const newPassword = req.body.new_pword;
+
+    // User ID
+    const userID = req.body._id;
+
+    // Query user by ID
+    const queryID = { _id: userID };
+
+    // Create an update object
+    const fieldsToUpdate = {};
+
+    // Check which fields are filled, add to fieldsToUpdate object if field is filled
+    if (newFirstName) fieldsToUpdate.first_name = newFirstName;
+    if (newLastName) fieldsToUpdate.last_name = newLastName;
+    if (newEmail) fieldsToUpdate.email = newEmail;
+    if (newPassword) fieldsToUpdate.pword = newPassword;
+
+    // Update the date in  user document
+    fieldsToUpdate.created_at_date = new Date().toDateString();
+
+    // Update the time in user document
+    fieldsToUpdate.created_at_time = new Date().toTimeString();
+
+    try {
+        // Find user document by ID and update
+        const updatedDoc = await User.findByIdAndUpdate(
+            queryID,
+            fieldsToUpdate,
+            {
+                new: true, // Return updated document
+            }
+        ).exec();
+        console.log(updatedDoc);
+        return res
+            .status(200)
+            .json({ message: 'User updated.', updatedUser: updatedDoc });
+    } catch (error) {
+        return res.status(500).json({
+            error: 'Cannot update user.',
+        });
+    }
+};
+
 const getCategories = async (req, res) => {
     // User ID
     const userID = req.params.id;
@@ -8,6 +56,7 @@ const getCategories = async (req, res) => {
     try {
         // Get user document by ID
         const userDocument = await User.findById(userID).exec();
+        // If length of categories array is 0
         if (userDocument.categories.length === 0) {
             return res.status(200).json({
                 message: 'No categories found.',
@@ -24,55 +73,9 @@ const getCategories = async (req, res) => {
     }
 };
 
-const updateUserInfo = async (req, res) => {
-    // All possible fields to update
-    const newFirstName = req.body.first_name;
-    const newLastName = req.body.last_name;
-    const newEmail = req.body.email;
-    const newPassword = req.body.newPassword;
-
-    // User ID
-    const userID = req.body.user_id;
-
-    // Query user by ID
-    const queryID = { _id: userID };
-
-    // Create an update object
-    const fieldsToUpdate = {};
-
-    // Check which fields are filled, add to fieldsToUpdate object if field is filled
-    if (newFirstName) fieldsToUpdate.first_name = newFirstName;
-    if (newLastName) fieldsToUpdate.last_name = newLastName;
-    if (newEmail) fieldsToUpdate.email = newEmail;
-    if (newPassword) fieldsToUpdate.pword = newPassword;
-
-    // Update the date document was updated
-    fieldsToUpdate.created_at_date = new Date().toDateString();
-    // Update the time document was updated
-    fieldsToUpdate.created_at_time = new Date().toTimeString();
-
-    try {
-        // Find user document by ID and update
-        const updatedDoc = await User.findByIdAndUpdate(
-            queryID,
-            fieldsToUpdate,
-            {
-                new: true,
-            }
-        ).exec();
-        return res
-            .status(200)
-            .json({ message: 'User updated.', updatedUser: updatedDoc });
-    } catch (error) {
-        return res.status(500).json({
-            error: 'Cannot update user.',
-        });
-    }
-};
-
 const addNewCategories = async (req, res) => {
     // User ID
-    const userID = req.body.user_id;
+    const userID = req.body._id;
 
     // Query user by ID
     const queryID = { _id: userID };
@@ -92,7 +95,7 @@ const addNewCategories = async (req, res) => {
             _id: new mongoose.Types.ObjectId(),
             created_at_date: new Date().toDateString(),
             created_at_time: new Date().toTimeString(),
-            title: newCategoriesArray[i].trim(), // Trim whitespace
+            title: newCategoriesArray[i].trim().toLowerCase(), // Trim whitespace, make all lowercase
             stacks: [],
         };
         categoriesToInsert.push(categoryObject);
@@ -100,21 +103,65 @@ const addNewCategories = async (req, res) => {
 
     try {
         // Find user document by ID and update categories field
-        const addedCategories = await User.findOneAndUpdate(
+        await User.findByIdAndUpdate(
             queryID,
             // Push new categories to categories array in user document
             { $push: { categories: { $each: categoriesToInsert } } },
-            { new: true }
+            { new: true } // Return updated document
         ).exec();
 
         return res.status(200).json({
             user_id: userID,
             message: 'Category(ies) added.',
-            categories: addedCategories.categories,
+            // Returns all categories that were added
+            // Look at date and time for newly added fields
+            categories: categoriesToInsert,
         });
     } catch (error) {
         return res.status(500).json({ error: 'Cannot add category(ies).' });
     }
 };
 
-module.exports = { updateUserInfo, addNewCategories, getCategories };
+const deleteCategories = async (req, res) => {
+    // Get credientials from request body
+    const userID = req.params.id;
+    const newCategories_title = req.body.title;
+
+    // Query user by ID
+    const queryID = { _id: userID };
+
+    // Create a categories array of titles
+    const category_title_array = newCategories_title.split(',');
+    // Trim whitespace and convert to lowercase
+    const category_title_array_modified = category_title_array.map((title) =>
+        title.trim().toLowerCase()
+    );
+    try {
+        // Find user document by ID and update categories field
+        await User.findByIdAndUpdate(
+            queryID,
+            // Delete categories from categories array in userDocument
+            {
+                $pull: {
+                    categories: {
+                        title: { $in: category_title_array_modified },
+                    },
+                },
+            },
+            { new: true }
+        ).exec();
+        return res.status(200).json({
+            _id: userID,
+            message: 'Category(ies) deleted.',
+            categories: category_title_array_modified,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: 'Cannot delete category(ies).' });
+    }
+};
+module.exports = {
+    updateUserInfo,
+    addNewCategories,
+    getCategories,
+    deleteCategories,
+};
