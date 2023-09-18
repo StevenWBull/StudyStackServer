@@ -21,7 +21,7 @@ const addRegisteredUser = async (req, res) => {
             pword,
         });
         return res.status(201).json({
-            message: `New user ${first_name} is registered.`,
+            message: `New user is registered.`,
             user: newUser,
         });
     } catch (error) {
@@ -50,7 +50,7 @@ const loginUser = async (req, res) => {
         // If user exists, return user info
         if (loginInfo) {
             return res.status(200).json({
-                message: `User ${loginInfo.first_name} logged in.`,
+                message: `User logged in.`,
                 login: loginInfo,
             });
         }
