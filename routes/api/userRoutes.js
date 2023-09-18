@@ -8,5 +8,6 @@ router.route('/user').patch(verifyUserUpdate(), userController.updateUserInfo);
 router
     .route('/categories')
     .post(verifyCategories(), userController.addNewCategories);
+router.route('/categories/:id').get(userController.getCategories);
 
 module.exports = router;

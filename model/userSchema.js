@@ -5,11 +5,9 @@ const cardAnswerSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     created_at_date: {
         type: String,
-        default: new Date().toDateString(),
     },
     created_at_time: {
         type: String,
-        default: new Date().toTimeString(),
     },
     is_correct: {
         type: Boolean,
@@ -21,11 +19,9 @@ const cardSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     created_at_date: {
         type: String,
-        default: new Date().toDateString(),
     },
     created_at_time: {
         type: String,
-        default: new Date().toTimeString(),
     },
     content: {
         type: String,
@@ -42,11 +38,9 @@ const stackSchema = Schema({
     _id: mongoose.Schema.Types.ObjectId,
     created_at_date: {
         type: String,
-        default: new Date().toDateString(),
     },
     created_at_time: {
         type: String,
-        default: new Date().toTimeString(),
     },
     title: {
         type: String,
@@ -59,11 +53,9 @@ const categorySchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     created_at_date: {
         type: String,
-        default: new Date().toDateString(),
     },
     created_at_time: {
         type: String,
-        default: new Date().toTimeString(),
     },
     title: {
         type: String,
@@ -76,11 +68,9 @@ const userSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     created_at_date: {
         type: String,
-        default: new Date().toDateString(),
     },
     created_at_time: {
         type: String,
-        default: new Date().toTimeString(),
     },
     first_name: {
         type: String,

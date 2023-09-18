@@ -13,6 +13,8 @@ const addRegisteredUser = async (req, res) => {
     try {
         const newUser = await User.create({
             _id: new mongoose.Types.ObjectId(),
+            created_at_date: new Date().toDateString(),
+            created_at_time: new Date().toTimeString(),
             first_name,
             last_name,
             email,

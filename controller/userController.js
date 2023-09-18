@@ -1,6 +1,29 @@
 const User = require('../model/userSchema');
 const mongoose = require('mongoose');
 
+const getCategories = async (req, res) => {
+    // User ID
+    const userID = req.params.id;
+
+    try {
+        // Get user document by ID
+        const userDocument = await User.findById(userID).exec();
+        if (userDocument.categories.length === 0) {
+            return res.status(200).json({
+                message: 'No categories found.',
+            });
+        } else {
+            return res.status(200).json({
+                user_id: userID,
+                message: 'Categories found.',
+                categories: userDocument.categories,
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Cannot get categories.' });
+    }
+};
+
 const updateUserInfo = async (req, res) => {
     // All possible fields to update
     const newFirstName = req.body.first_name;
@@ -29,6 +52,7 @@ const updateUserInfo = async (req, res) => {
     fieldsToUpdate.created_at_time = new Date().toTimeString();
 
     try {
+        // Find user document by ID and update
         const updatedDoc = await User.findByIdAndUpdate(
             queryID,
             fieldsToUpdate,
@@ -75,6 +99,7 @@ const addNewCategories = async (req, res) => {
     }
 
     try {
+        // Find user document by ID and update categories field
         const addedCategories = await User.findOneAndUpdate(
             queryID,
             // Push new categories to categories array in user document
@@ -92,4 +117,4 @@ const addNewCategories = async (req, res) => {
     }
 };
 
-module.exports = { updateUserInfo, addNewCategories };
+module.exports = { updateUserInfo, addNewCategories, getCategories };
