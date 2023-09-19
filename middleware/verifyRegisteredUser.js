@@ -1,4 +1,4 @@
-const User = require('../model/userSchema');
+const { User } = require('../model/userSchema');
 
 // Middleware to verify if user already exists
 const verifyRegisteredUser = () => {
@@ -7,13 +7,20 @@ const verifyRegisteredUser = () => {
         const email = req.body.email;
         const pword = req.body.pword;
 
-        // Check users collection for a document
-        const existingUser = await User.findOne({ email, pword }).exec();
+        try {
+            // Check users collection for a document
+            const existingUser = await User.findOne({ email, pword }).exec();
 
-        // If document exists
-        if (existingUser) {
-            return res.status(400).json({
-                error: `User is already registered.`,
+            // If document exists
+            if (existingUser) {
+                return res.status(400).json({
+                    error: `User is already registered.`,
+                });
+            }
+        } catch (error) {
+            return res.status(500).json({
+                error: 'Could not register user.',
+                error: error.message,
             });
         }
         next();
