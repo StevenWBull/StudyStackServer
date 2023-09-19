@@ -1,6 +1,6 @@
 const User = require('../model/userSchema');
 
-// Middleware to verify catogories to be added from a user
+// Middleware to verify categories to be added from a user
 const verifyCategories = () => {
     return async (req, res, next) => {
         // Get credientials from request body
