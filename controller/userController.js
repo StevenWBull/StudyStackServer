@@ -1,4 +1,4 @@
-const User = require('../model/userSchema');
+const { User } = require('../model/userSchema');
 
 const updateUserInfo = async (req, res) => {
     // Get Crendientals from request body
@@ -37,7 +37,6 @@ const updateUserInfo = async (req, res) => {
                 new: true, // Return updated document
             }
         ).exec();
-        console.log(updatedDoc);
         return res
             .status(200)
             .json({ message: 'User updated.', updatedUser: updatedDoc });

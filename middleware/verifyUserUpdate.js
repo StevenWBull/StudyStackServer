@@ -1,4 +1,4 @@
-const User = require('../model/userSchema');
+const { User } = require('../model/userSchema');
 
 // Middleware to verify if user can update email and/or password
 const verifyUserUpdate = () => {
