@@ -54,54 +54,55 @@ const getAllCategories = async (req, res) => {
     }
 };
 
-// const addNewCategories = async (req, res) => {
-//     // User ID
-//     const userID = req.body._id;
+const addNewCategories = async (req, res) => {
+    // User ID
+    const userID = req.params.userID;
 
-//     // Query user by ID
-//     const queryID = { _id: userID };
+    // Query user by ID
+    const queryID = { _id: userID };
 
-//     // Categories to be added
-//     const newCategories_title = req.body.title;
+    // Categories or category to be added
+    const newCategories = req.body;
 
-//     // Create a categories array
-//     const newCategoriesArray = newCategories_title.split(',');
+    // Extract category title property from array of objects
+    const category_title_array = newCategories.map((category) => {
+        return category.title;
+    });
+    // Category object array to insert new categories
+    const categoriesToInsert = [];
 
-//     // Category object array to insert new categories
-//     const categoriesToInsert = [];
+    // Fill categoriesToInsert with new category objects
+    for (let i = 0; i < category_title_array.length; i++) {
+        let categoryObject = {
+            _id: new mongoose.Types.ObjectId(),
+            created_at_date: new Date().toDateString(),
+            created_at_time: new Date().toTimeString(),
+            title: category_title_array[i],
+            stacks: [],
+        };
+        categoriesToInsert.push(categoryObject);
+    }
 
-//     // Fill categoriesToInsert with new category objects
-//     for (let i = 0; i < newCategoriesArray.length; i++) {
-//         let categoryObject = {
-//             _id: new mongoose.Types.ObjectId(),
-//             created_at_date: new Date().toDateString(),
-//             created_at_time: new Date().toTimeString(),
-//             title: newCategoriesArray[i].trim().toLowerCase(), // Trim whitespace, make all lowercase
-//             stacks: [],
-//         };
-//         categoriesToInsert.push(categoryObject);
-//     }
+    try {
+        // Find user document by ID and update categories field
+        await User.findByIdAndUpdate(
+            queryID,
+            // Push new categories to categories array in user document
+            { $push: { categories: { $each: categoriesToInsert } } },
+            { new: true } // Return updated document
+        ).exec();
 
-//     try {
-//         // Find user document by ID and update categories field
-//         await User.findByIdAndUpdate(
-//             queryID,
-//             // Push new categories to categories array in user document
-//             { $push: { categories: { $each: categoriesToInsert } } },
-//             { new: true } // Return updated document
-//         ).exec();
-
-//         return res.status(200).json({
-//             user_id: userID,
-//             message: 'Category(ies) added.',
-//             // Returns all categories that were added
-//             // Look at date and time for newly added fields
-//             categories: categoriesToInsert,
-//         });
-//     } catch (error) {
-//         return res.status(500).json({ error: 'Cannot add category(ies).' });
-//     }
-// };
+        return res.status(200).json({
+            user_id: userID,
+            message: 'Category(ies) added.',
+            // Returns all categories that were added
+            // Look at date and time for newly added fields
+            categories: categoriesToInsert,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: 'Cannot add category(ies).' });
+    }
+};
 
 // const deleteCategories = async (req, res) => {
 //     // Get credientials from request body
@@ -141,4 +142,4 @@ const getAllCategories = async (req, res) => {
 //     }
 // };
 
-module.exports = { getCategory, getAllCategories };
+module.exports = { getCategory, getAllCategories, addNewCategories };
