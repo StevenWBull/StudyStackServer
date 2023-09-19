@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('../model/userSchema');
+const { User } = require('../model/userSchema');
 
 const addRegisteredUser = async (req, res) => {
     // Destructure the request body, using optional chaining
@@ -55,9 +55,7 @@ const loginUser = async (req, res) => {
             });
         }
     } catch (error) {
-        return res
-            .status(500)
-            .json({ error: 'Could not login.', error: error.message });
+        return res.status(500).json({ error: 'Could not login user.' });
     }
 };
 
