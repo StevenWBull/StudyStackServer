@@ -59,7 +59,16 @@ const loginUser = async (req, res) => {
     }
 };
 
-// const logoutUser = async (req, res) => {
-// not to sure how to go about this one and implement yet
-// };
-module.exports = { addRegisteredUser, loginUser };
+const logoutUser = async (req, res) => {
+    try {
+        return res.status(200).json({
+            message: `User has logged out.`,
+        });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ error: 'Could not log out.', error: error.message });
+    }
+};
+
+module.exports = { addRegisteredUser, loginUser, logoutUser };
