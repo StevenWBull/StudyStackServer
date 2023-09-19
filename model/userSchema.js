@@ -91,4 +91,17 @@ const userSchema = new Schema({
     categories: [categorySchema],
 });
 
-module.exports = mongoose.model('User', userSchema);
+// Models for each schema
+User = mongoose.model('User', userSchema);
+Category = mongoose.model('Category', categorySchema);
+Stack = mongoose.model('Stack', stackSchema);
+Card = mongoose.model('Card', cardSchema);
+CardAnswer = mongoose.model('CardAnswer', cardAnswerSchema);
+
+module.exports = {
+    User,
+    Category,
+    Stack,
+    Card,
+    CardAnswer,
+};
