@@ -25,6 +25,7 @@ app.use(express.json());
 
 // Routes
 app.use('/v1', require('./routes/api/userRoutes'));
+app.use('/v1', require('./routes/api/categoryRoutes'));
 app.use('/v1/auth', require('./routes/api/authRoutes'));
 
 mongoose.connection.once('open', () => {
