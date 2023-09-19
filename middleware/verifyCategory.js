@@ -6,7 +6,6 @@ const verifyCategories = () => {
         // Get credientials from request body
         const userID = req.body._id;
         const newCategories_title = req.body.title;
-
         // Create a categories array of title property values
         const category_title_array = newCategories_title.split(',');
         try {
