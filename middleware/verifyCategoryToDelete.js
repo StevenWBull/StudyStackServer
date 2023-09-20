@@ -1,28 +1,21 @@
-const User = require('../model/userSchema');
+const { User } = require('../model/userSchema');
 
 // Middleware to verify if user can update email and/or password
 const verifyCategoryToDelete = () => {
     return async (req, res, next) => {
-        // Get credientials from request body
-        const userID = req.params.id;
-        const newCategories_title = req.body.title;
+        // User ID
+        const userID = req.params.userID;
+        // Category ID
+        const categoryID = req.params.categoryID;
 
-        // Create a categories array of title property values
-        const category_title_array = newCategories_title.split(',');
         try {
-            // Check users collection for a document
+            // Get user document by userID
             const userDocument = await User.findById(userID).exec();
-            // Check the user document for same categories as the ones to be added
-            for (const title of category_title_array) {
-                // If category title does not exists for user, return error
-                // Trim whitespace and convert to lowercase for comparison
-                if (
-                    !userDocument.categories.some(
-                        (category) =>
-                            category.title.trim().toLowerCase() ===
-                            title.trim().toLowerCase()
-                    )
-                ) {
+            // Find the category subdocument within the user document by its ID
+            const categorySubdocument = userDocument.categories.id(categoryID);
+            {
+                // If category subdocument does not exist, return error
+                if (!categorySubdocument) {
                     return res.status(400).json({
                         error: 'Category does not exists for user.',
                     });

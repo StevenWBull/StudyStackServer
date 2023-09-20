@@ -104,42 +104,40 @@ const addNewCategories = async (req, res) => {
     }
 };
 
-// const deleteCategories = async (req, res) => {
-//     // Get credientials from request body
-//     const userID = req.params.id;
-//     const newCategories_title = req.body.title;
+const deleteCategories = async (req, res) => {
+    // User ID
+    const userID = req.params.userID;
+    // Category ID
+    const categoryID = req.params.categoryID;
 
-//     // Query user by ID
-//     const queryID = { _id: userID };
+    // Query user by ID
+    const queryID = { _id: userID };
 
-//     // Create a categories array of titles
-//     const category_title_array = newCategories_title.split(',');
-//     // Trim whitespace and convert to lowercase
-//     const category_title_array_modified = category_title_array.map((title) =>
-//         title.trim().toLowerCase()
-//     );
-//     try {
-//         // Find user document by ID and update categories field
-//         await User.findByIdAndUpdate(
-//             queryID,
-//             // Delete categories from categories array in userDocument
-//             {
-//                 $pull: {
-//                     categories: {
-//                         title: { $in: category_title_array_modified },
-//                     },
-//                 },
-//             },
-//             { new: true }
-//         ).exec();
-//         return res.status(200).json({
-//             _id: userID,
-//             message: 'Category(ies) deleted.',
-//             categories: category_title_array_modified,
-//         });
-//     } catch (error) {
-//         return res.status(500).json({ error: 'Cannot delete category(ies).' });
-//     }
-// };
+    try {
+        // Find user document by ID and update categories field
+        await User.findByIdAndUpdate(
+            queryID,
+            // Delete categories from categories array in userDocument
+            {
+                $pull: {
+                    categories: { _id: categoryID },
+                },
+            },
 
-module.exports = { getCategory, getAllCategories, addNewCategories };
+            { new: true }
+        ).exec();
+        return res.status(200).json({
+            _id: userID,
+            message: 'Category deleted.',
+        });
+    } catch (error) {
+        return res.status(500).json({ error: 'Cannot delete category.' });
+    }
+};
+
+module.exports = {
+    getCategory,
+    getAllCategories,
+    addNewCategories,
+    deleteCategories,
+};

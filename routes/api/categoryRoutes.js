@@ -13,8 +13,7 @@ router
 // the userID and the categoryID
 router
     .route('/user/:userID/category/:categoryID')
-    .get(categoryController.getCategory);
-
-//   .delete(verifyCategoryToDelete(), categoryController.deleteCategories);
+    .get(categoryController.getCategory)
+    .delete(verifyCategoryToDelete(), categoryController.deleteCategories);
 
 module.exports = router;
