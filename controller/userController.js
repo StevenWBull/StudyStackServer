@@ -23,10 +23,10 @@ const updateUserInfo = async (req, res) => {
     if (newPassword) fieldsToUpdate.pword = newPassword;
 
     // Update the date in  user document
-    fieldsToUpdate.created_at_date = new Date().toDateString();
+    fieldsToUpdate.updated_at_date = new Date().toDateString();
 
     // Update the time in user document
-    fieldsToUpdate.created_at_time = new Date().toTimeString();
+    fieldsToUpdate.updated_at_time = new Date().toTimeString();
 
     try {
         // Find user document by ID and update

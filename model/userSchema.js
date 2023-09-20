@@ -72,6 +72,12 @@ const userSchema = new Schema({
     created_at_time: {
         type: String,
     },
+    updated_at_date: {
+        type: String,
+    },
+    updated_at_time: {
+        type: String,
+    },
     first_name: {
         type: String,
         required: true,
