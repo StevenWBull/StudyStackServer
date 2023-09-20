@@ -94,7 +94,7 @@ const addNewCategories = async (req, res) => {
 
         return res.status(200).json({
             user_id: userID,
-            message: 'Category(ies) added.',
+            message: `${category_title_array.length === 1 ? 'Category' : 'Categories'} added.`,
             // Returns all categories that were added
             // Look at date and time for newly added fields
             categories: categoriesToInsert,
