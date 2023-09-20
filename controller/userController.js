@@ -1,5 +1,26 @@
 const { User } = require('../model/userSchema');
 
+const getUserInfo = async (req, res) => {
+    const userID = req.body._id;
+    try {
+        // Get user document by userID
+        const userDocument = await User.findById(userID).exec();
+
+        if (userDocument) {
+            return res.status(200).json({
+                message: 'User found.',
+                user: userDocument,
+            });
+        } else {
+            return res.status(400).json({
+                message: 'User not found.',
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Cannot get user.' });
+    }
+};
+
 const updateUserInfo = async (req, res) => {
     // Get Crendientals from request body
     const newFirstName = req.body.first_name;
@@ -49,4 +70,5 @@ const updateUserInfo = async (req, res) => {
 
 module.exports = {
     updateUserInfo,
+    getUserInfo,
 };
