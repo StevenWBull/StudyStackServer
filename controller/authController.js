@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('../model/userSchema');
+const { User } = require('../model/userSchema');
 
 const addRegisteredUser = async (req, res) => {
     // Destructure the request body, using optional chaining
@@ -13,13 +13,15 @@ const addRegisteredUser = async (req, res) => {
     try {
         const newUser = await User.create({
             _id: new mongoose.Types.ObjectId(),
+            created_at_date: new Date().toDateString(),
+            created_at_time: new Date().toTimeString(),
             first_name,
             last_name,
             email,
             pword,
         });
         return res.status(201).json({
-            message: `New user ${first_name} is registered.`,
+            message: `New user is registered.`,
             user: newUser,
         });
     } catch (error) {
@@ -48,14 +50,12 @@ const loginUser = async (req, res) => {
         // If user exists, return user info
         if (loginInfo) {
             return res.status(200).json({
-                message: `User ${loginInfo.first_name} logged in.`,
+                message: `User logged in.`,
                 login: loginInfo,
             });
         }
     } catch (error) {
-        return res
-            .status(500)
-            .json({ error: 'Could not login.', error: error.message });
+        return res.status(500).json({ error: 'Could not login user.' });
     }
 };
 
