@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5050;
 
 connectDB();
 
-// Actitvate middleware logEvents
+// Activate middleware logEvents
 app.use(logEvents);
 
 // Activate middleware cors
