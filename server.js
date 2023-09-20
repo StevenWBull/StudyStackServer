@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5050;
 
 connectDB();
 
-// Actitvate middleware logEvents
+// Activate middleware logEvents
 app.use(logEvents);
 
 // Activate middleware cors
@@ -24,9 +24,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Routes
+app.use('/v1/auth', require('./routes/api/authRoutes'));
 app.use('/v1', require('./routes/api/userRoutes'));
 app.use('/v1', require('./routes/api/categoryRoutes'));
-app.use('/v1/auth', require('./routes/api/authRoutes'));
 
 mongoose.connection.once('open', () => {
     console.log('MongoDB connected!');
