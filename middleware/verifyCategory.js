@@ -11,7 +11,6 @@ const verifyCategories = () => {
         const category_title_array = newCategories.map((category) => {
             return category.title;
         });
-        console.log(category_title_array);
         try {
             // Check users collection for a document
             const userDocument = await User.findById(userID).exec();
