@@ -6,6 +6,7 @@ const verifyRegisteredUser = require('../../middleware/verifyRegisteredUser');
 router
     .route('/register')
     .post(verifyRegisteredUser(), authController.addRegisteredUser);
+
 router.route('/login').post(authController.loginUser);
 router.route('/logout').get(authController.logoutUser);
 
