@@ -94,13 +94,19 @@ const addNewCategories = async (req, res) => {
 
         return res.status(200).json({
             user_id: userID,
-            message: `${category_title_array.length === 1 ? 'Category' : 'Categories'} added.`,
+            message: `${
+                category_title_array.length === 1 ? 'Category' : 'Categories'
+            } added.`,
             // Returns all categories that were added
             // Look at date and time for newly added fields
             categories: categoriesToInsert,
         });
     } catch (error) {
-        return res.status(500).json({ error: `Cannot add ${category_title_array.length === 1 ? 'category' : 'categories'}.` });
+        return res.status(500).json({
+            error: `Cannot add ${
+                category_title_array.length === 1 ? 'category' : 'categories'
+            }.`,
+        });
     }
 };
 
