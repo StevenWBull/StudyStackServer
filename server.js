@@ -27,6 +27,7 @@ app.use(express.json());
 app.use('/v1/auth', require('./routes/api/authRoutes'));
 app.use('/v1', require('./routes/api/userRoutes'));
 app.use('/v1', require('./routes/api/categoryRoutes'));
+app.use('/v1', require('./routes/api/stackRoutes'));
 
 mongoose.connection.once('open', () => {
     console.log('MongoDB connected!');
