@@ -1,6 +1,6 @@
 const { User } = require('../model/userSchema');
 
-// Middleware to verify if user can update email and/or password
+// Middleware to verify if user can delete a category
 const verifyCategoryToDelete = () => {
     return async (req, res, next) => {
         // User ID
