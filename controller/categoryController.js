@@ -88,7 +88,14 @@ const addNewCategories = async (req, res) => {
         await User.findByIdAndUpdate(
             queryID,
             // Push new categories to categories array in user document
-            { $push: { categories: { $each: categoriesToInsert } } },
+            {
+                $push: { categories: { $each: categoriesToInsert } },
+                // Update the updated_at_date and updated_at_time fields in user document
+                $set: {
+                    updated_at_date: new Date().toDateString(),
+                    updated_at_time: new Date().toTimeString(),
+                },
+            },
             { new: true } // Return updated document
         ).exec();
 
@@ -127,6 +134,11 @@ const deleteCategories = async (req, res) => {
             {
                 $pull: {
                     categories: { _id: categoryID },
+                },
+                // Update the updated_at_date and updated_at_time fields in user document
+                $set: {
+                    updated_at_date: new Date().toDateString(),
+                    updated_at_time: new Date().toTimeString(),
                 },
             },
 
