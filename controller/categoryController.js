@@ -102,15 +102,11 @@ const addNewCategories = async (req, res) => {
             categories: categoriesToInsert,
         });
     } catch (error) {
-        return res
-            .status(500)
-            .json({
-                error: `Cannot add ${
-                    category_title_array.length === 1
-                        ? 'category'
-                        : 'categories'
-                }.`,
-            });
+        return res.status(500).json({
+            error: `Cannot add ${
+                category_title_array.length === 1 ? 'category' : 'categories'
+            }.`,
+        });
     }
 };
 
