@@ -52,6 +52,5 @@ const patchUser = async (req, res) => {
 
 module.exports = {
     getUser,
-    postUser,
-    patchUser,
+    patchUser
 };
