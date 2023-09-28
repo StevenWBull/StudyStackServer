@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../../controller/authController');
-const verifyRegisteredUser = require('../../middleware/verifyRegisteredUser');
+const isRegisteredUser = require('../../middleware/isRegisteredUser');
 
 router
     .route('/register')
-    .post(verifyRegisteredUser(), authController.addRegisteredUser);
+    .post(isRegisteredUser, authController.addRegisteredUser);
 
 router.route('/login').post(authController.loginUser);
 router.route('/logout').get(authController.logoutUser);

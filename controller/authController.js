@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const { User } = require('../model/userSchema');
 
 const addRegisteredUser = async (req, res) => {
@@ -7,27 +6,26 @@ const addRegisteredUser = async (req, res) => {
 
     // Check if all fields are filled
     if (!first_name || !last_name || !email || !pword) {
-        return res.status(400).json({ error: 'All fields are required.' });
+        return res.status(400).json({ error: 'first_name, last_name, email, and pword request variables are required'});
     }
 
     try {
-        const newUser = await User.create({
-            _id: new mongoose.Types.ObjectId(),
-            created_at_date: new Date().toDateString(),
-            created_at_time: new Date().toTimeString(),
-            first_name,
-            last_name,
-            email,
-            pword,
+        // Make a new user via the User schema template
+        const user = await User.create({
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            pword: pword,
         });
-        return res.status(201).json({
-            message: `New user is registered.`,
-            user: newUser,
+
+        res.status(201).json({
+            message: 'User successfully created.',
+            user: user,
         });
-    } catch (error) {
+    } catch (err) {
         return res.status(500).json({
             error: 'Could not register user.',
-            error: error.message,
+            error: err.message,
         });
     }
 };

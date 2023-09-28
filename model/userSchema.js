@@ -70,7 +70,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    categories: [categorySchema],
+    categories: {
+        type: [categorySchema],
+        default: []
+    },
     created_at: {
         type: Date,
         default: Date.now,

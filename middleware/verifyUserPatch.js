@@ -15,7 +15,7 @@ const verifyUserPatch = async (req, res, next) => {
         });
     }
 
-    // user data to update
+    // user data to update if included
     let filter = {};
     if (req.body.new_first_name) filter.first_name = req.body.new_first_name;
     if (req.body.new_last_name) filter.last_name = req.body.new_last_name;
