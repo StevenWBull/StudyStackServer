@@ -68,11 +68,15 @@ const postUser = async (req, res) => {
 const patchUser = async (req, res) => {
     try {
         let user = await User.findOneAndUpdate(req.user, req.filter, {
-            new: true
+            new: true,
         });
         return res
             .status(200)
-            .json({ message: 'User updated.', oldUserInfo: req.user, currentUserInfo: user});
+            .json({
+                message: 'User updated.',
+                oldUserInfo: req.user,
+                currentUserInfo: user,
+            });
     } catch (err) {
         return res.status(500).json({
             error: err.message,

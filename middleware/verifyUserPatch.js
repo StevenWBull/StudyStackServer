@@ -24,7 +24,7 @@ const verifyUserPatch = async (req, res, next) => {
 
     // Store data in req to allow userController to access
     req.user = user;
-    req.filter = filter; 
+    req.filter = filter;
     next();
 };
 
