@@ -1,18 +1,25 @@
 const { User } = require('../model/userSchema');
 
-const getUserInfo = async (req, res) => {
-    const userID = req.body._id;
+// Req needs to include email and pword(password).
+const getUser = async (req, res) => {
+    if(!req.body.email || !req.body.pword) {
+        return res.status(400).json({
+            error: 'Email and pword request variables are required'
+        });
+    }
     try {
-        // Get user document by userID
-        const userDocument = await User.findById(userID).exec();
+        const user = await User.findOne({
+            email: req.body.email,
+            pword: req.body.pword
+        });
 
-        if (userDocument) {
+        if (user) {
             return res.status(200).json({
                 message: 'User found.',
-                user: userDocument,
+                user: user,
             });
         } else {
-            return res.status(400).json({
+            return res.status(404).json({
                 message: 'User not found.',
             });
         }
@@ -21,13 +28,32 @@ const getUserInfo = async (req, res) => {
     }
 };
 
-const updateUserInfo = async (req, res) => {
-    // Get Crendientals from request body
-    const newFirstName = req.body.first_name;
-    const newLastName = req.body.last_name;
-    const newEmail = req.body.email;
-    const newPassword = req.body.new_pword;
+const postUser = async (req, res) => {
+    if(!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.pword) {
+        return res.status(400).json({
+            error: 'first_name, last_name, email, and pword request variables are required'
+        });
+    }
 
+    const user = new User({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        pword: req.body.pword
+    });
+
+    try {
+        await user.save();
+        res.status(200).json({
+            message: "User successfully created.",
+            user: user
+        })
+    } catch (err) {
+        err.message;
+    }
+}
+
+const patchUser = async (req, res) => {
     // User ID
     const userID = req.body._id;
 
@@ -44,10 +70,7 @@ const updateUserInfo = async (req, res) => {
     if (newPassword) fieldsToUpdate.pword = newPassword;
 
     // Update the date in  user document
-    fieldsToUpdate.updated_at_date = new Date().toDateString();
-
-    // Update the time in user document
-    fieldsToUpdate.updated_at_time = new Date().toTimeString();
+    fieldsToUpdate.updated_at = new Date().toUTCString();
 
     try {
         // Find user document by ID and update
@@ -69,6 +92,7 @@ const updateUserInfo = async (req, res) => {
 };
 
 module.exports = {
-    updateUserInfo,
-    getUserInfo,
+    getUser,
+    postUser,
+    patchUser,
 };

@@ -5,7 +5,8 @@ const verifyUserUpdate = require('../../middleware/verifyUserUpdate');
 
 router
     .route('/user')
-    .patch(verifyUserUpdate(), userController.updateUserInfo)
-    .get(userController.getUserInfo);
-
+    .get(userController.getUser)
+    .post(userController.postUser)
+    .patch(verifyUserUpdate(), userController.patchUser);
+    
 module.exports = router;
