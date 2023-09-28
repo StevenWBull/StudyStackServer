@@ -3,8 +3,7 @@ const router = express.Router();
 const userController = require('../../controller/userController');
 const verifyUserPatch = require('../../middleware/verifyUserPatch');
 
-/* Request email, pword for finding the user. 
-new_first_name, new_last_name, new_email, new_pword should be used when updating user info.
+/* new_first_name, new_last_name, new_email, new_pword should be used when updating user info.
     Example: A request is made to change the user's email.
         The req looks like:
             {

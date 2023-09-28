@@ -72,7 +72,7 @@ const userSchema = new Schema({
     },
     categories: {
         type: [categorySchema],
-        default: []
+        default: [],
     },
     created_at: {
         type: Date,

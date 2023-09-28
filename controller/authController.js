@@ -6,7 +6,11 @@ const addRegisteredUser = async (req, res) => {
 
     // Check if all fields are filled
     if (!first_name || !last_name || !email || !pword) {
-        return res.status(400).json({ error: 'first_name, last_name, email, and pword request variables are required'});
+        return res
+            .status(400)
+            .json({
+                error: 'first_name, last_name, email, and pword request variables are required',
+            });
     }
 
     try {

@@ -3,7 +3,7 @@ const { User } = require('../model/userSchema');
 // Middleware to verify if user already exists
 const isRegisteredUser = async (req, res, next) => {
     try {
-         // Check if user exists
+        // Check if user exists
         const user = await User.findOne({
             email: req.body.email,
             pword: req.body.pword,
@@ -20,7 +20,7 @@ const isRegisteredUser = async (req, res, next) => {
             error: err.message,
         });
     }
-    next(); 
+    next();
 };
 
 module.exports = isRegisteredUser;
