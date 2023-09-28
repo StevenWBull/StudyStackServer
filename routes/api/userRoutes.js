@@ -8,5 +8,5 @@ router
     .get(userController.getUser)
     .post(userController.postUser)
     .patch(verifyUserUpdate(), userController.patchUser);
-    
+
 module.exports = router;

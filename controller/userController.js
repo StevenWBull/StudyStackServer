@@ -2,15 +2,15 @@ const { User } = require('../model/userSchema');
 
 // Req needs to include email and pword(password).
 const getUser = async (req, res) => {
-    if(!req.body.email || !req.body.pword) {
+    if (!req.body.email || !req.body.pword) {
         return res.status(400).json({
-            error: 'Email and pword request variables are required'
+            error: 'Email and pword request variables are required',
         });
     }
     try {
         const user = await User.findOne({
             email: req.body.email,
-            pword: req.body.pword
+            pword: req.body.pword,
         });
 
         if (user) {
@@ -29,9 +29,14 @@ const getUser = async (req, res) => {
 };
 
 const postUser = async (req, res) => {
-    if(!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.pword) {
+    if (
+        !req.body.first_name ||
+        !req.body.last_name ||
+        !req.body.email ||
+        !req.body.pword
+    ) {
         return res.status(400).json({
-            error: 'first_name, last_name, email, and pword request variables are required'
+            error: 'first_name, last_name, email, and pword request variables are required',
         });
     }
 
@@ -39,19 +44,19 @@ const postUser = async (req, res) => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
-        pword: req.body.pword
+        pword: req.body.pword,
     });
 
     try {
         await user.save();
         res.status(200).json({
-            message: "User successfully created.",
-            user: user
-        })
+            message: 'User successfully created.',
+            user: user,
+        });
     } catch (err) {
         err.message;
     }
-}
+};
 
 const patchUser = async (req, res) => {
     // User ID

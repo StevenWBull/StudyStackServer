@@ -10,8 +10,8 @@ const cardAnswerSchema = new Schema({
     },
     created_at: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
 const cardSchema = new Schema({
@@ -25,8 +25,8 @@ const cardSchema = new Schema({
     },
     created_at: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
 const stackSchema = Schema({
@@ -37,8 +37,8 @@ const stackSchema = Schema({
     cards: [cardSchema],
     created_at: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
 const categorySchema = new Schema({
@@ -49,8 +49,8 @@ const categorySchema = new Schema({
     stacks: [stackSchema],
     created_at: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
 const userSchema = new Schema({
@@ -73,11 +73,11 @@ const userSchema = new Schema({
     categories: [categorySchema],
     created_at: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
 User = mongoose.model('User', userSchema);
 module.exports = {
-    User
-}
+    User,
+};
