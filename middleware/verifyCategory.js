@@ -18,7 +18,6 @@ const verifyCategories = () => {
             // Check the user document for same categories as the ones to be added
             for (const title of category_title_array) {
                 // If category title already exists for user, return error
-                // Trim whitespace and convert to lowercase for comparison
                 if (
                     userDocument.categories.some(
                         (category) => category.title === title

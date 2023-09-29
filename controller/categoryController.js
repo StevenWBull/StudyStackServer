@@ -88,19 +88,32 @@ const addNewCategories = async (req, res) => {
         await User.findByIdAndUpdate(
             queryID,
             // Push new categories to categories array in user document
-            { $push: { categories: { $each: categoriesToInsert } } },
+            {
+                $push: { categories: { $each: categoriesToInsert } },
+                // Update the updated_at_date and updated_at_time fields in user document
+                $set: {
+                    updated_at_date: new Date().toDateString(),
+                    updated_at_time: new Date().toTimeString(),
+                },
+            },
             { new: true } // Return updated document
         ).exec();
 
         return res.status(200).json({
             user_id: userID,
-            message: `${category_title_array.length === 1 ? 'Category' : 'Categories'} added.`,
+            message: `${
+                category_title_array.length === 1 ? 'Category' : 'Categories'
+            } added.`,
             // Returns all categories that were added
             // Look at date and time for newly added fields
             categories: categoriesToInsert,
         });
     } catch (error) {
-        return res.status(500).json({ error: `Cannot add ${category_title_array.length === 1 ? 'category' : 'categories'}.` });
+        return res.status(500).json({
+            error: `Cannot add ${
+                category_title_array.length === 1 ? 'category' : 'categories'
+            }.`,
+        });
     }
 };
 
@@ -121,6 +134,11 @@ const deleteCategories = async (req, res) => {
             {
                 $pull: {
                     categories: { _id: categoryID },
+                },
+                // Update the updated_at_date and updated_at_time fields in user document
+                $set: {
+                    updated_at_date: new Date().toDateString(),
+                    updated_at_time: new Date().toTimeString(),
                 },
             },
 
