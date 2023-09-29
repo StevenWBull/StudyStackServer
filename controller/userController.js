@@ -1,7 +1,8 @@
 const { User } = require('../model/userSchema');
 
 const getUser = async (req, res) => {
-    if (!req.body.email || !req.body.pword) {
+    const { email, pword } = req?.body;
+    if (!email || !pword) {
         // 400 Bad Request
         return res.status(400).json({
             error: 'Email and pword request variables are required',
@@ -10,8 +11,8 @@ const getUser = async (req, res) => {
     try {
         // Find user via built in schema function
         const user = await User.findOne({
-            email: req.body.email,
-            pword: req.body.pword,
+            email: email,
+            pword: pword,
         });
 
         if (user) {
@@ -52,5 +53,5 @@ const patchUser = async (req, res) => {
 
 module.exports = {
     getUser,
-    patchUser
+    patchUser,
 };
