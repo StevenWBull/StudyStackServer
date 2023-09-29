@@ -37,7 +37,7 @@ const loginUser = async (req, res) => {
     const { email, pword } = req?.body;
 
     if (!email || !pword) {
-        return res.status(401).json({ error: 'Invalid credentials.' });
+        return res.status(401).json({ error: 'Email and password are required.' });
     }
 
     try {
@@ -52,6 +52,10 @@ const loginUser = async (req, res) => {
             return res.status(200).json({
                 message: `User logged in.`,
                 login: loginInfo,
+            });
+        } else {
+            return res.status(404).json({
+                message: `User not found.`,
             });
         }
     } catch (error) {
