@@ -15,6 +15,8 @@ const addRegisteredUser = async (req, res) => {
             _id: new mongoose.Types.ObjectId(),
             created_at_date: new Date().toDateString(),
             created_at_time: new Date().toTimeString(),
+            updated_at_date: new Date().toDateString(),
+            updated_at_time: new Date().toTimeString(),
             first_name,
             last_name,
             email,
