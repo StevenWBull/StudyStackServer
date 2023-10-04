@@ -15,7 +15,7 @@ new_first_name, new_last_name, new_email, new_pword should be used when updating
             }
 */
 router
-    .route('/user')
+    .route('/')
     .get(userController.getUser)
     .patch(verifyUserPatch, userController.patchUser);
 
