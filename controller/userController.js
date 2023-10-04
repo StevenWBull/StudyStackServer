@@ -32,7 +32,8 @@ const getUser = async (req, res) => {
 
 // Update User info from the req.user and req.filter variables. These are passed from the verifyUserPatch middleware.
 const patchUser = async (req, res) => {
-    const { userID, new_first_name, new_last_name, new_email, new_pword } = req?.body;
+    const { userID, new_first_name, new_last_name, new_email, new_pword } =
+        req?.body;
 
     // User data to update if included
     let filter = {};
@@ -44,12 +45,12 @@ const patchUser = async (req, res) => {
     // Don't send a DB request if there are no values to update
     if (Object.keys(filter).length === 0) {
         return res.status(400).json({
-            message: "No user values provided to update.",
+            message: 'No user values provided to update.',
         });
     }
-    console.log(filter);
+    
     try {
-        let user = await User.findOneAndUpdate({_id: userID}, filter, {
+        let user = await User.findOneAndUpdate({ _id: userID }, filter, {
             new: true,
         });
         return res.status(200).json({
