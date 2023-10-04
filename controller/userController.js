@@ -33,7 +33,7 @@ const getUser = async (req, res) => {
     }
 };
 
-// req.user and req.filter are checked for in verifyUserPatch and stored in the request so that they can be accessed here.
+// Update User info from the req.user and req.filter variables. These are passed from the verifyUserPatch middleware.
 const patchUser = async (req, res) => {
     try {
         let user = await User.findOneAndUpdate(req.user, req.filter, {
@@ -46,6 +46,7 @@ const patchUser = async (req, res) => {
         });
     } catch (err) {
         return res.status(500).json({
+            message: "Error updating User info",
             error: err.message,
         });
     }

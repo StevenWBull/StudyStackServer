@@ -2,10 +2,14 @@ const { User } = require('../model/userSchema');
 
 // Middleware to verify if user can update their credentials
 const verifyUserPatch = async (req, res, next) => {
+    const { email, pword, 
+        new_first_name, new_last_name, 
+        new_email, new_pword} = req?.body;
+
     // Check if user exists
     const user = await User.findOne({
-        email: req.body.email,
-        pword: req.body.pword,
+        email: email,
+        pword: pword,
     });
 
     if (!user) {
@@ -15,12 +19,12 @@ const verifyUserPatch = async (req, res, next) => {
         });
     }
 
-    // user data to update if included
+    // User data to update if included
     let filter = {};
-    if (req.body.new_first_name) filter.first_name = req.body.new_first_name;
-    if (req.body.new_last_name) filter.last_name = req.body.new_last_name;
-    if (req.body.new_email) filter.email = req.body.new_email;
-    if (req.body.new_pword) filter.pword = req.body.new_pword;
+    if (new_first_name) filter.first_name = new_first_name;
+    if (new_last_name) filter.last_name = new_last_name;
+    if (new_email) filter.email = new_email;
+    if (new_pword) filter.pword = new_pword;
 
     // Store data in req to allow userController to access
     req.user = user;
