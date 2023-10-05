@@ -65,7 +65,7 @@ const loginUser = async (req, res) => {
             pword,
         }).exec();
 
-        console.log(loginInfo)
+        console.log(loginInfo);
 
         // If user exists, return user info
         if (loginInfo) {
