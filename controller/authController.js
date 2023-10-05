@@ -8,11 +8,11 @@ const _generateJWTToken = (user) => {
         id: user._id,
         email: user.email,
         firstName: user.first_name,
-        lastName: user.last_name
+        lastName: user.last_name,
     };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '7d' }); // Token expires in 1 week
     return token;
-}
+};
 
 const addRegisteredUser = async (req, res) => {
     // Destructure the request body, using optional chaining
@@ -39,7 +39,7 @@ const addRegisteredUser = async (req, res) => {
         const token = _generateJWTToken(newUser);
         return res.status(201).json({
             message: `New user is registered.`,
-            token: newUser,
+            token: token,
         });
     } catch (error) {
         return res.status(500).json({
