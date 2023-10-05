@@ -52,7 +52,6 @@ const addRegisteredUser = async (req, res) => {
 const loginUser = async (req, res) => {
     // Destructure the request body, using optional chaining
     const { email, pword } = req?.body;
-    console.log(email, pword);
 
     if (!email || !pword) {
         return res.status(401).json({ error: 'Invalid credentials.' });
