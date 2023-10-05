@@ -6,6 +6,7 @@ const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const connectDB = require('./config/dbConn');
 const logEvents = require('./middleware/logEvents');
+const verifyToken = require('./middleware/verifyToken');
 
 const PORT = process.env.PORT || 5050;
 
@@ -25,6 +26,10 @@ app.use(express.json());
 
 // Routes
 app.use('/v1/auth', require('./routes/api/authRoutes'));
+
+// Middleware to verify JWT, routes after this point are protected
+app.use(verifyToken);
+
 app.use('/v1', require('./routes/api/userRoutes'));
 app.use('/v1', require('./routes/api/categoryRoutes'));
 app.use('/v1', require('./routes/api/stackRoutes'));

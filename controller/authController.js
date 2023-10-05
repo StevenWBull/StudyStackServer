@@ -52,6 +52,7 @@ const addRegisteredUser = async (req, res) => {
 const loginUser = async (req, res) => {
     // Destructure the request body, using optional chaining
     const { email, pword } = req?.body;
+    console.log(email, pword);
 
     if (!email || !pword) {
         return res.status(401).json({ error: 'Invalid credentials.' });
@@ -64,6 +65,8 @@ const loginUser = async (req, res) => {
             pword,
         }).exec();
 
+        console.log(loginInfo)
+
         // If user exists, return user info
         if (loginInfo) {
             const token = _generateJWTToken(loginInfo);
@@ -71,6 +74,9 @@ const loginUser = async (req, res) => {
                 message: `User logged in.`,
                 token: token,
             });
+        } else {
+            // If user doesn't exist or password is incorrect
+            return res.status(401).json({ error: 'Invalid credentials.' });
         }
     } catch (error) {
         return res.status(500).json({ error: 'Could not login user.' });
