@@ -64,7 +64,6 @@ const loginUser = async (req, res) => {
             pword,
         }).exec();
 
-
         // If user exists, return user info
         if (loginInfo) {
             const token = _generateJWTToken(loginInfo);
