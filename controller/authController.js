@@ -1,5 +1,18 @@
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { User } = require('../model/userSchema');
+
+const _generateJWTToken = (user) => {
+    const SECRET_KEY = process.env.JWT_SECRET_KEY;
+    const payload = {
+        id: user._id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+    };
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '7d' }); // Token expires in 1 week
+    return token;
+};
 
 const addRegisteredUser = async (req, res) => {
     // Destructure the request body, using optional chaining
@@ -22,9 +35,11 @@ const addRegisteredUser = async (req, res) => {
             email,
             pword,
         });
+
+        const token = _generateJWTToken(newUser);
         return res.status(201).json({
             message: `New user is registered.`,
-            user: newUser,
+            token: token,
         });
     } catch (error) {
         return res.status(500).json({
@@ -51,10 +66,14 @@ const loginUser = async (req, res) => {
 
         // If user exists, return user info
         if (loginInfo) {
+            const token = _generateJWTToken(loginInfo);
             return res.status(200).json({
                 message: `User logged in.`,
-                login: loginInfo,
+                token: token,
             });
+        } else {
+            // If user doesn't exist or password is incorrect
+            return res.status(401).json({ error: 'Invalid credentials.' });
         }
     } catch (error) {
         return res.status(500).json({ error: 'Could not login user.' });
