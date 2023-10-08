@@ -21,7 +21,7 @@ const getCategory = async (req, res) => {
             });
         }
     } catch (err) {
-        return res.status(500).json({ 
+        return res.status(500).json({
             message: 'Cannot get category.',
             error: err.message,
         });
@@ -46,7 +46,7 @@ const getAllCategories = async (req, res) => {
             });
         }
     } catch (err) {
-        return res.status(500).json({ 
+        return res.status(500).json({
             message: 'Cannot get categories.',
             error: err.message,
         });
@@ -82,7 +82,7 @@ const addNewCategories = async (req, res) => {
     }
 };
 
-// Remove category from a userID using a category ID. 
+// Remove category from a userID using a category ID.
 const deleteCategories = async (req, res) => {
     const categoryID = req.params.categoryID;
     const user = req.user;

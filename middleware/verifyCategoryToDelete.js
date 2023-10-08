@@ -12,7 +12,6 @@ const verifyCategoryToDelete = async (req, res, next) => {
                 error: `Category ${categoryID} does not exist for user.`,
             });
         }
-        
     } catch (err) {
         return res.status(500).json({
             message: 'Cannot delete category.',

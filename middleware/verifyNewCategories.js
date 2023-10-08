@@ -7,18 +7,21 @@ const verifyNewCategories = async (req, res, next) => {
 
     try {
         for (c in newCategories) {
-            if (user.categories.some(
-                (category) => category.title.toLowerCase() === newCategories[c].title.toLowerCase()
-            )) {
+            if (
+                user.categories.some(
+                    (category) =>
+                        category.title.toLowerCase() ===
+                        newCategories[c].title.toLowerCase()
+                )
+            ) {
                 return res.status(400).json({
-                    error: `Category ${newCategories[c].title} already exists for user.`
+                    error: `Category ${newCategories[c].title} already exists for user.`,
                 });
             }
         }
-
     } catch (err) {
         return res.status(500).json({
-            message: "Cannot verify categories",
+            message: 'Cannot verify categories',
             error: err.message,
         });
     }
