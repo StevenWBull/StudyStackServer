@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
         const loginInfo = await User.findOne({
             email,
             pword,
-        }).exec();
+        });
 
         // If user exists, return user info
         if (loginInfo) {
@@ -60,8 +60,11 @@ const loginUser = async (req, res) => {
                 message: `User not found.`,
             });
         }
-    } catch (error) {
-        return res.status(500).json({ error: 'Could not login user.' });
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Could not login user.',
+            err: err.message,
+        });
     }
 };
 
@@ -70,11 +73,16 @@ const logoutUser = async (req, res) => {
         return res.status(200).json({
             message: `User has logged out.`,
         });
-    } catch (error) {
-        return res
-            .status(500)
-            .json({ error: 'Could not log out.', error: error.message });
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Could not log out.',
+            error: err.message,
+        });
     }
 };
 
-module.exports = { addRegisteredUser, loginUser, logoutUser };
+module.exports = {
+    addRegisteredUser,
+    loginUser,
+    logoutUser,
+};

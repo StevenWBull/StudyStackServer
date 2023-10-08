@@ -48,7 +48,7 @@ const patchUser = async (req, res) => {
             message: 'No user values provided to update.',
         });
     }
-    
+
     try {
         let user = await User.findOneAndUpdate({ _id: userID }, filter, {
             new: true,

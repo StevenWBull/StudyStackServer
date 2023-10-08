@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../../controller/userController');
-const verifyUserPatch = require('../../middleware/verifyUserPatch');
+const verifyUserPatch = require('../../middleware/retrieveUserInfo');
 
 /* 
 Patch User:

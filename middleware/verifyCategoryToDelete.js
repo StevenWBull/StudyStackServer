@@ -1,32 +1,24 @@
 const { User } = require('../model/userSchema');
 
-// Middleware to verify if user can update email and/or password
-const verifyCategoryToDelete = () => {
-    return async (req, res, next) => {
-        // User ID
-        const userID = req.params.userID;
-        // Category ID
-        const categoryID = req.params.categoryID;
+// Middleware to verify if the category to be deleted exists
+const verifyCategoryToDelete = async (req, res, next) => {
+    const user = req.user;
+    const categoryID = req.params.categoryID;
 
-        try {
-            // Get user document by userID
-            const userDocument = await User.findById(userID).exec();
-            // Find the category subdocument within the user document by its ID
-            const categorySubdocument = userDocument.categories.id(categoryID);
-            {
-                // If category subdocument does not exist, return error
-                if (!categorySubdocument) {
-                    return res.status(400).json({
-                        error: 'Category does not exists for user.',
-                    });
-                }
-            }
-        } catch (error) {
-            return res.status(500).json({
-                error: 'Cannot delete category.',
+    try {
+        // If category ID does not exist, return error
+        if (!user.categories.id(categoryID)) {
+            return res.status(400).json({
+                error: `Category ${categoryID} does not exist for user.`,
             });
         }
-        next();
-    };
+        
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Cannot delete category.',
+            error: err.message,
+        });
+    }
+    next();
 };
 module.exports = verifyCategoryToDelete;
