@@ -9,10 +9,20 @@ const verifyStackToDelete = require('../../middleware/stacksMiddleware/verifySta
 router
     .route('/')
     .get(retrieveUserInfo, retrieveCategoryInfo, stackController.getStacks)
-    .post(retrieveUserInfo, retrieveCategoryInfo, verifyNewStacks, stackController.addNewStacks);
+    .post(
+        retrieveUserInfo,
+        retrieveCategoryInfo,
+        verifyNewStacks,
+        stackController.addNewStacks
+    );
 
 router
     .route('/:stackID')
-    .delete(retrieveUserInfo, retrieveCategoryInfo, verifyStackToDelete, stackController.deleteStack);
+    .delete(
+        retrieveUserInfo,
+        retrieveCategoryInfo,
+        verifyStackToDelete,
+        stackController.deleteStack
+    );
 
 module.exports = router;

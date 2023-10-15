@@ -7,11 +7,13 @@ const verifyNewStacks = async (req, res, next) => {
     try {
         for (s in newStacks) {
             if (
-                user.categories.id(category._id).stacks.some(
-                    (stack) =>
-                        stack.title.toLowerCase() ===
-                        newStacks[s].title.toLowerCase()
-                )
+                user.categories
+                    .id(category._id)
+                    .stacks.some(
+                        (stack) =>
+                            stack.title.toLowerCase() ===
+                            newStacks[s].title.toLowerCase()
+                    )
             ) {
                 return res.status(400).json({
                     error: `Stack ${newStacks[s].title} already exists for user.`,
@@ -24,7 +26,7 @@ const verifyNewStacks = async (req, res, next) => {
             error: err.message,
         });
     }
-    
+
     next();
 };
 

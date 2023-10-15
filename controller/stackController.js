@@ -34,7 +34,7 @@ const addNewStacks = async (req, res) => {
     const user = req.user;
     const category = req.category;
     const { newStacks } = req?.body;
-    
+
     try {
         // Loop through the object array and generate a new stack for each
         for (s in newStacks) {

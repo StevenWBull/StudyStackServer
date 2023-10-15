@@ -15,7 +15,7 @@ router
         categoryController.addNewCategories
     );
 
-// Get or delete a category by the user's ID and a given category ID 
+// Get or delete a category by the user's ID and a given category ID
 router
     .route('/:categoryID')
     .get(retrieveUserInfo, categoryController.getCategory)

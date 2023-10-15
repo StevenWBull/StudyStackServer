@@ -92,5 +92,5 @@ Stack = mongoose.model('Stack', stackSchema);
 module.exports = {
     User,
     Category,
-    Stack
+    Stack,
 };
