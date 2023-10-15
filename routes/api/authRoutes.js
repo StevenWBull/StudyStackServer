@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../../controller/authController');
-const isRegisteredUser = require('../../middleware/isRegisteredUser');
+const isRegisteredUser = require('../../middleware/userMiddleware/isRegisteredUser');
 
 router
     .route('/register')

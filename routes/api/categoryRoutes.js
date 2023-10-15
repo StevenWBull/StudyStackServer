@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const retrieveUserInfo = require('../../middleware/retrieveUserInfo');
-const verifyCategories = require('../../middleware/verifyNewCategories');
-const verifyCategoryToDelete = require('../../middleware/verifyCategoryToDelete');
+const retrieveUserInfo = require('../../middleware/retrieveInfo/retrieveUserInfo');
+const verifyCategories = require('../../middleware/categoryMiddleware/verifyNewCategories');
+const verifyCategoryToDelete = require('../../middleware/categoryMiddleware/verifyCategoryToDelete');
 const categoryController = require('../../controller/categoryController');
 
+// Get all categories or post more categories to a user via their ID
 router
     .route('/')
     .get(retrieveUserInfo, categoryController.getAllCategories)
@@ -14,7 +15,7 @@ router
         categoryController.addNewCategories
     );
 
-// To find the category subdocument within the user document we need both the userID and the categoryID
+// Get or delete a category by the user's ID and a given category ID 
 router
     .route('/:categoryID')
     .get(retrieveUserInfo, categoryController.getCategory)

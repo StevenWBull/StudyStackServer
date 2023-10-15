@@ -34,7 +34,10 @@ const stackSchema = Schema({
         type: String,
         required: true,
     },
-    cards: [cardSchema],
+    cards: {
+        type: [cardSchema],
+        default: [],
+    },
     created_at: {
         type: Date,
         default: Date.now,
@@ -85,7 +88,9 @@ const userSchema = new Schema({
 
 User = mongoose.model('User', userSchema);
 Category = mongoose.model('Category', categorySchema);
+Stack = mongoose.model('Stack', stackSchema);
 module.exports = {
     User,
     Category,
+    Stack
 };

@@ -1,8 +1,8 @@
-const { User } = require('../model/userSchema');
+const { User } = require('../../model/userSchema');
 
 // Middleware to find and return the user
 const retrieveUserInfo = async (req, res, next) => {
-    const { userID } = req?.body;
+    const userID = req.body.userID;
 
     if (!userID) {
         return res.status(400).json({

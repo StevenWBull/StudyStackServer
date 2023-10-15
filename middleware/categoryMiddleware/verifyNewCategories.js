@@ -1,6 +1,4 @@
-const { User, Category } = require('../model/userSchema');
-
-// Middleware to verify is a user already has a category
+// Middleware to verify is a user already has a given category
 const verifyNewCategories = async (req, res, next) => {
     const user = req.user;
     const { newCategories } = req?.body;

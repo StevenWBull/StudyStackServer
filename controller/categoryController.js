@@ -1,4 +1,4 @@
-const { User, Category } = require('../model/userSchema');
+const { Category } = require('../model/userSchema');
 
 // Get a category from the userID provided in the req.body
 const getCategory = async (req, res) => {

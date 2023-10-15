@@ -1,5 +1,3 @@
-const { User } = require('../model/userSchema');
-
 // Middleware to verify if the category to be deleted exists
 const verifyCategoryToDelete = async (req, res, next) => {
     const user = req.user;
