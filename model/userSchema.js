@@ -3,24 +3,13 @@ const Schema = mongoose.Schema;
 
 // _id is added automatically by mongoose to each schema
 
-const cardAnswerSchema = new Schema({
-    is_correct: {
-        type: Boolean,
-        required: true,
-    },
-    created_at: {
-        type: Date,
-        default: Date.now,
-    },
-});
-
 const cardSchema = new Schema({
     content: {
         type: String,
         required: true,
     },
     answer: {
-        type: cardAnswerSchema,
+        type: String,
         required: true,
     },
     created_at: {
@@ -89,8 +78,10 @@ const userSchema = new Schema({
 User = mongoose.model('User', userSchema);
 Category = mongoose.model('Category', categorySchema);
 Stack = mongoose.model('Stack', stackSchema);
+Card = mongoose.model('Card', cardSchema);
 module.exports = {
     User,
     Category,
     Stack,
+    Card,
 };

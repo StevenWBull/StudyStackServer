@@ -4,20 +4,20 @@ const { Stack } = require('../model/userSchema');
 const getStacks = async (req, res) => {
     const user = req.user;
     const category = req.category;
-    const cTitle = user.categories.id(category._id).title;
+    const categoryTitle = user.categories.id(category._id).title;
     const stacks = user.categories.id(category._id).stacks;
 
     try {
         // If length of stacks is 0, then no stacks exist
         if (stacks.length === 0) {
             return res.status(200).json({
-                message: `No stacks found for category ${cTitle}.`,
+                message: `No stacks found for category ${categoryTitle}.`,
             });
         } else {
             return res.status(200).json({
                 message: 'Stacks found.',
                 userID: user._id,
-                category: cTitle,
+                category: categoryTitle,
                 stacks: stacks,
             });
         }
@@ -62,7 +62,7 @@ const addNewStacks = async (req, res) => {
 // Remove stack from a category using its ID
 const deleteStack = async (req, res) => {
     const user = req.user;
-    const category = req.user.categories.id(req.category._id);
+    const category = user.categories.id(req.category._id);
     const stackID = req.params.stackID;
 
     try {

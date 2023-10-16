@@ -28,6 +28,7 @@ app.use('/v1/auth', require('./routes/api/authRoutes')); // Routes for user to r
 app.use('/v1/user', require('./routes/api/userRoutes'));
 app.use('/v1/categories', require('./routes/api/categoryRoutes'));
 app.use('/v1/stacks', require('./routes/api/stackRoutes'));
+app.use('/v1/cards', require('./routes/api/cardRoutes'));
 
 mongoose.connection.once('open', () => {
     console.log('MongoDB connected!');

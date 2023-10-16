@@ -1,15 +1,91 @@
-const { User, Card } = require('../model/userSchema');
-const mongoose = require('mongoose');
+const { Card } = require('../model/userSchema');
 
-const addNewCard = async (req, res) => {
-    const userID = req.params.userID;
-    const categoryID = req.params.categoryID;
-    const stackID = req.params.stackID;
+// Get all cards from a specified userID and stackID
+const getCards = async (req, res) => {
+    const user = req.user;
+    const category = req.category;
+    const stack = req.stack;
+    const cards = user.categories.id(category._id).stacks.id(stack._id).cards;
 
-    const newCard = new Card({
-        stack_id: stackID,
-        content: req.body.content,
-        answer: '',
-        created_at: new Date().toUTCString(),
-    });
+    try {
+        if (cards.length === 0) {
+            return res.status(200).json({
+                message: `No cards found for stack ${stack.title}.`,
+            });
+        } else {
+            return res.status(200).json({
+                message: 'Cards found.',
+                userID: user._id,
+                stack: stack.title,
+                cards: cards,
+            });
+        }
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Cannot get cards.',
+            error: err.message,
+        });
+    }
 };
+
+
+// Add new cards to a user via the stackID. Allows for multiple cards to be added at once.
+const addNewCards = async (req, res) => {
+    const user = req.user;
+    const category = req.category;
+    const stack = req.stack;
+    const { newCards } = req?.body;
+
+    try {
+        // Loop through the object array and generate a new card for each
+        for (c in newCards) {
+            const card = await Card.create({
+                content: newCards[c].content,
+                answer: newCards[c].answer
+            });
+            user.categories.id(category._id).stacks.id(stack._id).cards.push(card);
+        }
+
+        await user.save();
+
+        return res.status(200).json({
+            message: `Cards added.`,
+            user: user._id,
+            cards: user.categories.id(category._id).stacks.id(stack._id).cards,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Cannot add cards',
+            error: err.message,
+        });
+    }
+};
+
+// Remove card from a category using its ID
+const deleteCard = async (req, res) => {
+    const user = req.user;
+    const stack = user.categories.id(req.category._id).stacks.id(req.stack._id);
+    const cardID = req.params.cardID;
+
+    try {
+        stack.cards.id(cardID).deleteOne();
+        await user.save();
+
+        return res.status(200).json({
+            message: 'Card deleted.',
+            user: user._id,
+            stack: stack,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Cannot delete card.',
+            error: err.message,
+        });
+    }
+};
+
+module.exports = {
+    addNewCards,
+    getCards,
+    deleteCard,
+}
