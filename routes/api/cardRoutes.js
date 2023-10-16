@@ -6,10 +6,14 @@ const retrieveCategoryInfo = require('../../middleware/retrieveInfo/retrieveCate
 const retrieveStackInfo = require('../../middleware/retrieveInfo/retrieveStackInfo');
 const retrieveUserInfo = require('../../middleware/retrieveInfo/retrieveUserInfo');
 
-
 router
     .route('/')
-    .get(retrieveUserInfo, retrieveCategoryInfo, retrieveStackInfo, cardController.getCards)
+    .get(
+        retrieveUserInfo,
+        retrieveCategoryInfo,
+        retrieveStackInfo,
+        cardController.getCards
+    )
     .post(
         retrieveUserInfo,
         retrieveCategoryInfo,

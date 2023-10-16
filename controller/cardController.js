@@ -28,7 +28,6 @@ const getCards = async (req, res) => {
     }
 };
 
-
 // Add new cards to a user via the stackID. Allows for multiple cards to be added at once.
 const addNewCards = async (req, res) => {
     const user = req.user;
@@ -41,9 +40,12 @@ const addNewCards = async (req, res) => {
         for (c in newCards) {
             const card = await Card.create({
                 content: newCards[c].content,
-                answer: newCards[c].answer
+                answer: newCards[c].answer,
             });
-            user.categories.id(category._id).stacks.id(stack._id).cards.push(card);
+            user.categories
+                .id(category._id)
+                .stacks.id(stack._id)
+                .cards.push(card);
         }
 
         await user.save();
@@ -88,4 +90,4 @@ module.exports = {
     addNewCards,
     getCards,
     deleteCard,
-}
+};

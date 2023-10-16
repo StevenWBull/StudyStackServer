@@ -1,6 +1,8 @@
 // Middleware to verify if the card to be deleted exists
 const verifyCardToDelete = async (req, res, next) => {
-    const stack = req.user.categories.id(req.category._id).stacks.id(req.stack._id);
+    const stack = req.user.categories
+        .id(req.category._id)
+        .stacks.id(req.stack._id);
     const cardID = req.params.cardID;
 
     try {
