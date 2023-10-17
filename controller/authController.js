@@ -17,10 +17,9 @@ const _generateJWTToken = (user) => {
 const addRegisteredUser = async (req, res) => {
     // Destructure the request body, using optional chaining
     const { first_name, last_name, email, pword } = req?.body;
-
     // Check if all fields are filled
     if (!first_name || !last_name || !email || !pword) {
-        return res.status(400).json({ error: 'All fields are required.' });
+        return res.status(400).json({ message: 'All fields are required.' });
     }
 
     try {
@@ -43,7 +42,7 @@ const addRegisteredUser = async (req, res) => {
         });
     } catch (error) {
         return res.status(500).json({
-            error: 'Could not register user.',
+            message: 'Could not register user.',
             error: error.message,
         });
     }
@@ -73,10 +72,10 @@ const loginUser = async (req, res) => {
             });
         } else {
             // If user doesn't exist or password is incorrect
-            return res.status(401).json({ error: 'Invalid credentials.' });
+            return res.status(401).json({ message: 'Invalid credentials.' });
         }
     } catch (error) {
-        return res.status(500).json({ error: 'Could not login user.' });
+        return res.status(500).json({ message: 'Could not login user.', error: error.message });
     }
 };
 
@@ -88,7 +87,7 @@ const logoutUser = async (req, res) => {
     } catch (error) {
         return res
             .status(500)
-            .json({ error: 'Could not log out.', error: error.message });
+            .json({ message: 'Could not log out.', error: error.message });
     }
 };
 
