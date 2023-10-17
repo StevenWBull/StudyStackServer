@@ -17,7 +17,6 @@ const _generateJWTToken = (user) => {
 const addRegisteredUser = async (req, res) => {
     // Destructure the request body, using optional chaining
     const { first_name, last_name, email, pword } = req?.body;
-    console.log(!!first_name, !!last_name, !!email, !!pword);
     // Check if all fields are filled
     if (!first_name || !last_name || !email || !pword) {
         return res.status(400).json({ message: 'All fields are required.' });
