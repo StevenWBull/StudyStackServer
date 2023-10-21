@@ -70,11 +70,11 @@ const updateCard = async (req, res) => {
 
     const updates = {
         content: req.body.cardUpdates.content,
-        answer: req.body.cardUpdates.answer
-    }
+        answer: req.body.cardUpdates.answer,
+    };
 
     try {
-        const card = await User.findOne({ _id: user._id }, );
+        const card = await User.findOne({ _id: user._id });
 
         //await user.categories.id(req.category._id).stacks.id(req.stack._id).cards.id(cardID).save();
         return res.status(200).json({
@@ -88,7 +88,7 @@ const updateCard = async (req, res) => {
             error: err.message,
         });
     }
-}
+};
 
 // Remove card from a stack using its ID
 const deleteCard = async (req, res) => {
