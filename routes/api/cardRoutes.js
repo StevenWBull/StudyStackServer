@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cardController = require('../../controller/cardController');
-const verifyCardToDelete = require('../../middleware/cardsMiddleware/verifyCardToDelete');
+const verifyCardExists = require('../../middleware/cardsMiddleware/verifyCardExists');
 const retrieveCategoryInfo = require('../../middleware/retrieveInfo/retrieveCategoryInfo');
 const retrieveStackInfo = require('../../middleware/retrieveInfo/retrieveStackInfo');
 const retrieveUserInfo = require('../../middleware/retrieveInfo/retrieveUserInfo');
@@ -23,11 +23,18 @@ router
 
 router
     .route('/:cardID')
+    .patch(
+        retrieveUserInfo,
+        retrieveCategoryInfo,
+        retrieveStackInfo,
+        verifyCardExists,
+        cardController.updateCard
+    )
     .delete(
         retrieveUserInfo,
         retrieveCategoryInfo,
         retrieveStackInfo,
-        verifyCardToDelete,
+        verifyCardExists,
         cardController.deleteCard
     );
 

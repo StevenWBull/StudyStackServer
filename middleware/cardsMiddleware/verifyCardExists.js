@@ -1,5 +1,5 @@
 // Middleware to verify if the card to be deleted exists
-const verifyCardToDelete = async (req, res, next) => {
+const verifyCardExists = async (req, res, next) => {
     const stack = req.user.categories
         .id(req.category._id)
         .stacks.id(req.stack._id);
@@ -20,4 +20,4 @@ const verifyCardToDelete = async (req, res, next) => {
     }
     next();
 };
-module.exports = verifyCardToDelete;
+module.exports = verifyCardExists;
