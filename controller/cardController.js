@@ -1,4 +1,4 @@
-const { Card, User, Stack } = require('../model/userSchema');
+const { Card, User, Stack, Category } = require('../model/userSchema');
 
 // Get all cards from a specified userID and stackID
 const getCards = async (req, res) => {
@@ -66,20 +66,19 @@ const addNewCards = async (req, res) => {
 // Update card using its ID
 const updateCard = async (req, res) => {
     const user = req.user;
+    const stack = user.categories.id(req.category._id).stacks.id(req.stack._id);
     const cardID = req.params.cardID;
 
-    const updates = {
-        content: req.body.cardUpdates.content,
-        answer: req.body.cardUpdates.answer,
-    };
-
     try {
-        const card = await User.findOne({ _id: user._id });
+        const card = stack.cards.id(cardID)
+        if (req.body.cardUpdates.content) card.content = req.body.cardUpdates.content;
+        if (req.body.cardUpdates.answer) card.answer = req.body.cardUpdates.answer;
 
-        //await user.categories.id(req.category._id).stacks.id(req.stack._id).cards.id(cardID).save();
+        await user.save();
+
         return res.status(200).json({
             message: 'Card updated.',
-            user: user._id,
+            user: user,
             cardUpdated: card,
         });
     } catch (err) {
