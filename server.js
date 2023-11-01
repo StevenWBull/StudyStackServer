@@ -6,6 +6,7 @@ const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const connectDB = require('./config/dbConn');
 const logEvents = require('./middleware/logEvents');
+const verifyToken = require('./middleware/verifyToken');
 
 const PORT = process.env.PORT || 5050;
 
@@ -22,6 +23,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // Built-in middleware for json
 app.use(express.json());
+
+// Middleware to verify JWT, routes after this point are protected
+app.use(verifyToken);
 
 // Routes
 app.use('/v1/auth', require('./routes/api/authRoutes')); // Routes for user to register, login, and logout

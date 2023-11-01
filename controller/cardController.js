@@ -1,4 +1,4 @@
-const { Card, User, Stack, Category } = require('../model/userSchema');
+const { Card } = require('../model/userSchema');
 
 // Get all cards from a specified userID and stackID
 const getCards = async (req, res) => {
