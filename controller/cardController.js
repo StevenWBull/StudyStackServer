@@ -70,9 +70,11 @@ const updateCard = async (req, res) => {
     const cardID = req.params.cardID;
 
     try {
-        const card = stack.cards.id(cardID)
-        if (req.body.cardUpdates.content) card.content = req.body.cardUpdates.content;
-        if (req.body.cardUpdates.answer) card.answer = req.body.cardUpdates.answer;
+        const card = stack.cards.id(cardID);
+        if (req.body.cardUpdates.content)
+            card.content = req.body.cardUpdates.content;
+        if (req.body.cardUpdates.answer)
+            card.answer = req.body.cardUpdates.answer;
 
         await user.save();
 
