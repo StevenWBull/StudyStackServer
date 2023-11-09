@@ -40,14 +40,14 @@ describe('Auth Routes', () => {
         it('/login should return 200 and user logged in message', (done) => {
             const req = {
                 email: 'test@test.com',
-                pword: 'test'
-            }
+                pword: 'test',
+            };
             chai.request(app)
                 .post('/v1/auth/login')
                 .auth('bearer', token)
                 .send(req)
                 .end((err, res) => {
-                    if(err) {
+                    if (err) {
                         expect(res).to.have.status(500);
                     } else {
                         expect(res).to.have.status(200);
@@ -64,7 +64,7 @@ describe('Auth Routes', () => {
                 .get('/v1/auth/logout')
                 .auth('bearer', token)
                 .end((err, res) => {
-                    if(err) {
+                    if (err) {
                         expect(res).to.have.status(500);
                     } else {
                         expect(res).to.have.status(200);
