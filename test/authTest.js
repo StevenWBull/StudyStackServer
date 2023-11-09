@@ -13,10 +13,17 @@ const user = {
     email: 'test@test.com',
     pword: 'test',
 };
+
 const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGMwYWRiY2MzMTBjMWFhNzA1NzNlOSIsImVtYWlsIjoic3RldmVuQG5vLmNvbSIsImZpcnN0TmFtZSI6IlN0ZXZlbiIsImxhc3ROYW1lIjoiQnVsbCIsImlhdCI6MTY5OTQ5NTgwNCwiZXhwIjoxNzAwMTAwNjA0fQ.O4_OworJdarVytewa4_29pjVZ76RTtNOG0DYAzGiXEg';
 
+    //Clean database before each run
+const cleanup = async() => {
+
+}
+
 chai.use(chaiHttp);
+// Auth routes testing
 describe('Auth Routes', () => {
     describe('POST /v1/auth/register', () => {
         it('should post a valid user', (done) => {
@@ -75,3 +82,5 @@ describe('Auth Routes', () => {
         });
     });
 });
+
+// User routes testing
