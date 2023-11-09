@@ -17,10 +17,8 @@ const user = {
 const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGMwYWRiY2MzMTBjMWFhNzA1NzNlOSIsImVtYWlsIjoic3RldmVuQG5vLmNvbSIsImZpcnN0TmFtZSI6IlN0ZXZlbiIsImxhc3ROYW1lIjoiQnVsbCIsImlhdCI6MTY5OTQ5NTgwNCwiZXhwIjoxNzAwMTAwNjA0fQ.O4_OworJdarVytewa4_29pjVZ76RTtNOG0DYAzGiXEg';
 
-    //Clean database before each run
-const cleanup = async() => {
-
-}
+//Clean database before each run
+const cleanup = async () => {};
 
 chai.use(chaiHttp);
 // Auth routes testing
