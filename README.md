@@ -90,68 +90,53 @@ Standard JWT authorization is used for this application. You must send the `Auth
 
 - `GET /v1/user`
 
-   **No arguments required.**
-
-- `POST /v1/category`
-
    **Arguments:**
    - Body:
-     - `name` (string): Name of the category.
+     - `_id` (string): ID of user to find.
 
-- `GET /v1/category`
-
-   **No arguments required.**
-
-- `GET /v1/category/:id`
+- `POST /v1/categories/:userID`
 
    **Arguments:**
-   - Path parameter:
-     - `id` (string): ID of the category.
-
-- `PATCH /v1/category/:id`
-
-   **Arguments:**
-   - Path parameter:
-     - `id` (string): ID of the category.
-   - Body (optional):
-     - `name` (string): Updated name of the category.
-
-- `DELETE /v1/category/:id`
-
-   **Arguments:**
-   - Path parameter:
-     - `id` (string): ID of the category.
-
-- `POST /v1/stack`
-
-   **Arguments:**
+   - URL Params:
+     - `userID` (string): ID of user to retrieve categories from.
    - Body:
-     - `category_id` (string): ID of the category to which the stack belongs.
-     - `name` (string): Name of the stack.
+     - `title` (string): Name of the category.
 
-- `GET /v1/stack`
-
-   **No arguments required.**
-
-- `GET /v1/stack/:id`
+- `GET /v1/categories/:userID `
 
    **Arguments:**
-   - Path parameter:
-     - `id` (string): ID of the stack.
+  - URL Params:
+    - `userID` (string): ID of user to retrieve categories from.
 
-- `PATCH /v1/stack/:id`
-
-   **Arguments:**
-   - Path parameter:
-     - `id` (string): ID of the stack.
-   - Body (optional):
-     - `name` (string): Updated name of the stack.
-
-- `DELETE /v1/stack/:id`
+- `GET /v1/user/:userID/category/:categoryID`
 
    **Arguments:**
-   - Path parameter:
-     - `id` (string): ID of the stack.
+  - URL Params:
+    - `userID` (string): ID of user to retrieve category from.
+    - `categoryID` (string): ID of the category to retrieve.
+
+- `DELETE /v1/user/:userID/category/:categoryID`
+
+   **Arguments:**
+  - URL Params:
+    - `userID` (string): ID of user to delete category from.
+    - `categoryID` (string): ID of the category to delete.
+
+- `POST /v1/stacks/:userID/category/:categoryID`
+
+   **Arguments:**
+   - URL Params:
+    - `userID` (string): ID of user to create stack for.
+    - `categoryID` (string): ID of the category to create stack in.
+   - Body:
+     - `title` (string): Name of the stack.
+
+- `DELETE /v1/ /user/:userID/stack/:stackID`
+
+   **Arguments:**
+   - URL Params:
+    - `userID` (string): ID of user to delete stack from.
+    - `categoryID` (string): ID of the category to delete stack from.
 
 Make sure to include the necessary request headers and body parameters as specified in the API documentation.
 
