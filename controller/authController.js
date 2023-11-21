@@ -16,7 +16,6 @@ const _generateJWTToken = (user) => {
 const addRegisteredUser = async (req, res) => {
     // Destructure the request body, using optional chaining
     const { first_name, last_name, email, pword } = req?.body;
-
     // Check if all fields are filled
     if (!first_name || !last_name || !email || !pword) {
         return res.status(400).json({
@@ -76,7 +75,7 @@ const loginUser = async (req, res) => {
             return res.status(404).json({
                 message: `User not found.`,
             });
-        }
+        } 
     } catch (err) {
         return res.status(500).json({
             message: 'Could not login user.',
