@@ -1,74 +1,71 @@
 const { User } = require('../model/userSchema');
 
-const getUserInfo = async (req, res) => {
-    const userID = req.body._id;
+const getUser = async (req, res) => {
+    const { userID } = req?.body;
+    if (!userID) {
+        // 400 Bad Request
+        return res.status(400).json({
+            error: 'userID request variable is required',
+        });
+    }
     try {
-        // Get user document by userID
-        const userDocument = await User.findById(userID).exec();
+        // Find user via built in schema function
+        const user = await User.findById(userID);
 
-        if (userDocument) {
+        if (user) {
+            // 200 OK
             return res.status(200).json({
                 message: 'User found.',
-                user: userDocument,
+                user: user,
             });
         } else {
-            return res.status(400).json({
+            // 404 Not Found
+            return res.status(404).json({
                 message: 'User not found.',
             });
         }
-    } catch (error) {
-        return res.status(500).json({ error: 'Cannot get user.' });
+    } catch (err) {
+        // 500 Internal Server Error
+        return res.status(500).json({ error: err.message });
     }
 };
 
-const updateUserInfo = async (req, res) => {
-    // Get Crendientals from request body
-    const newFirstName = req.body.first_name;
-    const newLastName = req.body.last_name;
-    const newEmail = req.body.email;
-    const newPassword = req.body.new_pword;
+// Update User info from the req.user and req.filter variables. These are passed from the verifyUserPatch middleware.
+const patchUser = async (req, res) => {
+    const { userID, new_first_name, new_last_name, new_email, new_pword } =
+        req?.body;
 
-    // User ID
-    const userID = req.body._id;
+    // User data to update if included
+    let filter = {};
+    if (new_first_name) filter.first_name = new_first_name;
+    if (new_last_name) filter.last_name = new_last_name;
+    if (new_email) filter.email = new_email;
+    if (new_pword) filter.pword = new_pword;
 
-    // Query user by ID
-    const queryID = { _id: userID };
-
-    // Create an update object
-    const fieldsToUpdate = {};
-
-    // Check which fields are filled, add to fieldsToUpdate object if field is filled
-    if (newFirstName) fieldsToUpdate.first_name = newFirstName;
-    if (newLastName) fieldsToUpdate.last_name = newLastName;
-    if (newEmail) fieldsToUpdate.email = newEmail;
-    if (newPassword) fieldsToUpdate.pword = newPassword;
-
-    // Update the date in  user document
-    fieldsToUpdate.updated_at_date = new Date().toDateString();
-
-    // Update the time in user document
-    fieldsToUpdate.updated_at_time = new Date().toTimeString();
+    // Don't send a DB request if there are no values to update
+    if (Object.keys(filter).length === 0) {
+        return res.status(400).json({
+            message: 'No user values provided to update.',
+        });
+    }
 
     try {
-        // Find user document by ID and update
-        const updatedDoc = await User.findByIdAndUpdate(
-            queryID,
-            fieldsToUpdate,
-            {
-                new: true, // Return updated document
-            }
-        ).exec();
-        return res
-            .status(200)
-            .json({ message: 'User updated.', updatedUser: updatedDoc });
-    } catch (error) {
+        let user = await User.findOneAndUpdate({ _id: userID }, filter, {
+            new: true,
+        });
+        return res.status(200).json({
+            message: `User values ${Object.keys(filter)} updated.`,
+            currentUserInfo: user,
+        });
+    } catch (err) {
         return res.status(500).json({
-            error: 'Cannot update user.',
+            message: 'Error updating User info',
+            error: err.message,
         });
     }
 };
 
 module.exports = {
-    updateUserInfo,
-    getUserInfo,
+    getUser,
+    patchUser,
 };

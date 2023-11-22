@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 const { User } = require('../model/userSchema');
+const jwt = require('jsonwebtoken');
 
 const _generateJWTToken = (user) => {
     const SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -19,31 +18,30 @@ const addRegisteredUser = async (req, res) => {
     const { first_name, last_name, email, pword } = req?.body;
     // Check if all fields are filled
     if (!first_name || !last_name || !email || !pword) {
-        return res.status(400).json({ message: 'All fields are required.' });
+        return res.status(400).json({
+            error: 'first_name, last_name, email, and pword request variables are required',
+        });
     }
 
     try {
-        const newUser = await User.create({
-            _id: new mongoose.Types.ObjectId(),
-            created_at_date: new Date().toDateString(),
-            created_at_time: new Date().toTimeString(),
-            updated_at_date: new Date().toDateString(),
-            updated_at_time: new Date().toTimeString(),
-            first_name,
-            last_name,
-            email,
-            pword,
+        // Make a new user via the User schema template
+        const user = await User.create({
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            pword: pword,
         });
 
         const token = _generateJWTToken(newUser);
-        return res.status(201).json({
-            message: `New user is registered.`,
+        res.status(201).json({
+            message: 'User successfully created.',
+            user: user,
             token: token,
         });
-    } catch (error) {
+    } catch (err) {
         return res.status(500).json({
-            message: 'Could not register user.',
-            error: error.message,
+            error: 'Could not register user.',
+            error: err.message,
         });
     }
 };
@@ -53,7 +51,9 @@ const loginUser = async (req, res) => {
     const { email, pword } = req?.body;
 
     if (!email || !pword) {
-        return res.status(401).json({ error: 'Invalid credentials.' });
+        return res
+            .status(401)
+            .json({ error: 'Email and password are required.' });
     }
 
     try {
@@ -61,23 +61,26 @@ const loginUser = async (req, res) => {
         const loginInfo = await User.findOne({
             email,
             pword,
-        }).exec();
+        });
 
         // If user exists, return user info
         if (loginInfo) {
             const token = _generateJWTToken(loginInfo);
             return res.status(200).json({
                 message: `User logged in.`,
+                login: loginInfo,
                 token: token,
             });
         } else {
-            // If user doesn't exist or password is incorrect
-            return res.status(401).json({ message: 'Invalid credentials.' });
+            return res.status(404).json({
+                message: `User not found.`,
+            });
         }
-    } catch (error) {
-        return res
-            .status(500)
-            .json({ message: 'Could not login user.', error: error.message });
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Could not login user.',
+            err: err.message,
+        });
     }
 };
 
@@ -86,11 +89,16 @@ const logoutUser = async (req, res) => {
         return res.status(200).json({
             message: `User has logged out.`,
         });
-    } catch (error) {
-        return res
-            .status(500)
-            .json({ message: 'Could not log out.', error: error.message });
+    } catch (err) {
+        return res.status(500).json({
+            message: 'Could not log out.',
+            error: err.message,
+        });
     }
 };
 
-module.exports = { addRegisteredUser, loginUser, logoutUser };
+module.exports = {
+    addRegisteredUser,
+    loginUser,
+    logoutUser,
+};
