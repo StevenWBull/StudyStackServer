@@ -8,7 +8,7 @@ const connectDB = require('./config/dbConn');
 const logEvents = require('./middleware/logEvents');
 const verifyToken = require('./middleware/verifyToken');
 
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 8080;
 
 connectDB();
 
