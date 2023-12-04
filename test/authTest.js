@@ -15,9 +15,18 @@ const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGMwYWRiY2MzMTBjMWFhNzA1NzNlOSIsImVtYWlsIjoic3RldmVuQG5vLmNvbSIsImZpcnN0TmFtZSI6IlN0ZXZlbiIsImxhc3ROYW1lIjoiQnVsbCIsImlhdCI6MTcwMDYwMDkwMSwiZXhwIjoxNzAxMjA1NzAxfQ.WstPjmZzUYbUAFstXjCXjfMSwlgyauL7pbM7mMUCs5Q';
 
 //Clean database before each run
-const cleanup = async () => {};
+const cleanup = async (req, res) => {
+    await User.deleteOne({ first_name: user.first_name, last_name: user.last_name });
+};
 
 chai.use(chaiHttp);
+describe('Cleaning up', () => {
+    it('should clear up the database', (done) => {
+        cleanup();
+        done();
+    });
+});
+
 // Auth routes testing
 describe('Auth Routes', () => {
     describe('POST /v1/auth/register', () => {
