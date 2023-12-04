@@ -95,7 +95,7 @@ describe('User Routes', () => {
             chai.request(app)
                 .get('/v1/user')
                 .set('Authorization', `Bearer ${token}`)
-                .send({userID: user.id})
+                .send({ userID: user.id })
                 .end((err, res) => {
                     if (err) {
                         expect(res).to.have.status(500);
@@ -113,7 +113,7 @@ describe('User Routes', () => {
             chai.request(app)
                 .patch('/v1/user')
                 .set('Authorization', `Bearer ${token}`)
-                .send({userID: user.id, new_email: "test@testing.com"})
+                .send({ userID: user.id, new_email: 'test@testing.com' })
                 .end((err, res) => {
                     if (err) {
                         expect(res).to.have.status(500);
