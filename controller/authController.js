@@ -32,7 +32,7 @@ const addRegisteredUser = async (req, res) => {
             pword: pword,
         });
 
-        const token = _generateJWTToken(newUser);
+        const token = _generateJWTToken(user);
         res.status(201).json({
             message: 'User successfully created.',
             user: user,
