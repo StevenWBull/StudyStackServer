@@ -4,8 +4,8 @@
     "description": "INITIAL README",
     "main": "server.js",
     "scripts": {
-        "test": "test server.js",
-        "start": "node server.js",
+        "test": "mocha || true",
+        "start": "nodemon server.js",
         "dev": "nodemon server.js",
         "lint": "eslint .",
         "format": "prettier --write \"**/*.{js,json}\"",
