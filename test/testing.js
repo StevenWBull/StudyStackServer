@@ -175,7 +175,7 @@ describe('Categories Routes', () => {
         });
     });
 
-    describe('GET /v1/categories/categoryID', () => {
+    describe('GET /v1/categories/:categoryID', () => {
         it('should get a valid category', (done) => {
             chai.request(app)
                 .get(`/v1/categories/${passVars.categoryID}`)
@@ -239,9 +239,111 @@ describe('Stack Routes', () => {
     });
 });
 
+// Card Routes
+describe('Card Routes', () => {
+    describe('POST /v1/cards', () => {
+        it('should post a card', (done) => {
+            chai.request(app)
+                .post('/v1/cards')
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    userID: passVars.id,
+                    categoryID: passVars.categoryID,
+                    stackID: passVars.stackID,
+                    newCards: [
+                        {
+                            content: '1 + 1',
+                            answer: '2',
+                        },
+                    ],
+                })
+                .end((err, res) => {
+                    passVars.cardID = res.body.cards[0]._id;
+                    if (err) {
+                        expect(res).to.have.status(500);
+                    } else {
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
+                    }
+                    done();
+                });
+        });
+    });
+
+    describe('PATCH /v1/cards/:cardID', () => {
+        it('should update a card', (done) => {
+            chai.request(app)
+                .patch(`/v1/cards/${passVars.cardID}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    userID: passVars.id,
+                    categoryID: passVars.categoryID,
+                    stackID: passVars.stackID,
+                    cardUpdates: {
+                        content: '2+1',
+                        answer: '3',
+                    },
+                })
+                .end((err, res) => {
+                    if (err) {
+                        expect(res).to.have.status(500);
+                    } else {
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
+                    }
+                    done();
+                });
+        });
+    });
+
+    describe('GET /v1/cards', () => {
+        it('should get all cards', (done) => {
+            chai.request(app)
+                .get('/v1/cards')
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    userID: passVars.id,
+                    categoryID: passVars.categoryID,
+                    stackID: passVars.stackID,
+                })
+                .end((err, res) => {
+                    if (err) {
+                        expect(res).to.have.status(500);
+                    } else {
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
+                    }
+                    done();
+                });
+        });
+    });
+});
+
 // Test delete routes after other testing is completed
 describe('DELETE Routes', () => {
-    describe('DELETE /v1/stacks', () => {
+    describe('DELETE /v1/cards/:cardID', () => {
+        it('should delete a card', (done) => {
+            chai.request(app)
+                .delete(`/v1/cards/${passVars.cardID}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    userID: passVars.id,
+                    categoryID: passVars.categoryID,
+                    stackID: passVars.stackID,
+                })
+                .end((err, res) => {
+                    if (err) {
+                        expect(res).to.have.status(500);
+                    } else {
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
+                    }
+                    done();
+                });
+        });
+    });
+
+    describe('DELETE /v1/stacks/:stackID', () => {
         it('should delete a stack', (done) => {
             chai.request(app)
                 .delete(`/v1/stacks/${passVars.stackID}`)
@@ -259,14 +361,13 @@ describe('DELETE Routes', () => {
         });
     });
 
-    describe('DELETE /v1/categories/categoryID', () => {
+    describe('DELETE /v1/categories/:categoryID', () => {
         it('should delete a valid category', (done) => {
             chai.request(app)
                 .delete(`/v1/categories/${passVars.categoryID}`)
                 .set('Authorization', `Bearer ${token}`)
                 .send({ userID: passVars.id })
                 .end((err, res) => {
-                    console.log(err);
                     if (err) {
                         expect(res).to.have.status(404);
                     } else {
