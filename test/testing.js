@@ -193,6 +193,71 @@ describe('Categories Routes', () => {
                 });
         });
     });
+});
+
+// Stack routes testing
+describe('Stack Routes', () => {
+    describe('POST /v1/stacks', () => {
+        it('should post a stack', (done) => {
+            chai.request(app)
+                .post('/v1/stacks')
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    userID: passVars.id,
+                    categoryID: passVars.categoryID,
+                    newStacks: [{ title: 'Chemistry' }],
+                })
+                .end((err, res) => {
+                    passVars.stackID = res.body.stacks[0]._id;
+                    if (err) {
+                        expect(res).to.have.status(500);
+                    } else {
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
+                    }
+                    done();
+                });
+        });
+    });
+
+    describe('GET /v1/stacks', () => {
+        it('should get all stacks for a user', (done) => {
+            chai.request(app)
+                .get('/v1/stacks')
+                .set('Authorization', `Bearer ${token}`)
+                .send({ userID: passVars.id, categoryID: passVars.categoryID })
+                .end((err, res) => {
+                    if (err) {
+                        expect(res).to.have.status(500);
+                    } else {
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
+                    }
+                    done();
+                });
+        });
+    });
+});
+
+// Test delete routes after other testing is completed
+describe('DELETE Routes', () => {
+    describe('DELETE /v1/stacks', () => {
+        it('should delete a stack', (done) => {
+            chai.request(app)
+                .delete(`/v1/stacks/${passVars.stackID}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({ userID: passVars.id, categoryID: passVars.categoryID })
+                .end((err, res) => {
+                    if (err) {
+                        expect(res).to.have.status(500);
+                    } else {
+                        expect(res).to.have.status(200);
+                        expect(res).to.be.json;
+                    }
+                    done();
+                });
+        });
+    });
 
     describe('DELETE /v1/categories/categoryID', () => {
         it('should delete a valid category', (done) => {
