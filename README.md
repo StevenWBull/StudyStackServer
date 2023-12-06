@@ -83,60 +83,97 @@ Standard JWT authorization is used for this application. You must send the `Auth
 
    **Arguments:**
    - Body (optional):
-     - `first_name` (string): Updated first name of the user.
-     - `last_name` (string): Updated last name of the user.
-     - `email` (string): Updated email address of the user.
-     - `pword` (string): Updated password of the user.
+     - `userID` (string): ID of user to update.
+     - `new_first_name` (string): Updated first name of the user.
+     - `new_last_name` (string): Updated last name of the user.
+     - `new_email` (string): Updated email address of the user.
+     - `new_pword` (string): Updated password of the user.
 
 - `GET /v1/user`
 
    **Arguments:**
    - Body:
-     - `_id` (string): ID of user to find.
+     - `userID` (string): ID of user to find.
 
-- `POST /v1/categories/:userID`
+- `POST /v1/categories`
 
    **Arguments:**
-   - URL Params:
-     - `userID` (string): ID of user to retrieve categories from.
    - Body:
-     - `title` (string): Name of the category.
+     - `userID` (string): ID of user to find.
+     - `newCategories` (string): array of category objects. Each object is represented as { "title": "category title" }.
+       
 
-- `GET /v1/categories/:userID `
+- `GET /v1/categories`
+- Finds all categories for user.
+   **Arguments:**
+   - Body:
+     - `userID` (string): ID of user to find categories.
+
+- `GET /v1/categories/:categoryID`
+- Finds a single category for user.
+   **Arguments:**
+  - URL Params:
+    - `categoryID` (string): ID of the category to find.
+  - Body:
+    - `userID` (string): ID of user to find category.
+    
+
+- `DELETE /v1/categories/:categoryID`
 
    **Arguments:**
   - URL Params:
-    - `userID` (string): ID of user to retrieve categories from.
-
-- `GET /v1/user/:userID/category/:categoryID`
-
-   **Arguments:**
-  - URL Params:
-    - `userID` (string): ID of user to retrieve category from.
-    - `categoryID` (string): ID of the category to retrieve.
-
-- `DELETE /v1/user/:userID/category/:categoryID`
-
-   **Arguments:**
-  - URL Params:
-    - `userID` (string): ID of user to delete category from.
     - `categoryID` (string): ID of the category to delete.
+  - Body:
+    - `userID` (string): ID of user to find category.
 
-- `POST /v1/stacks/:userID/category/:categoryID`
-
+- `POST /v1/stacks`
    **Arguments:**
-   - URL Params:
-    - `userID` (string): ID of user to create stack for.
-    - `categoryID` (string): ID of the category to create stack in.
    - Body:
-     - `title` (string): Name of the stack.
+     - `userID` (string): ID of user to find.
+     - `categoryID` (string): ID of category to find.
+     - `newStacks` (string): array of stack objects. Each object is represented as { "title": "stack title" }.
+    
+- `GET /v1/stacks`
+- Finds all stacks for user
+   **Arguments:**
+  - Body:
+     - `userID` (string): ID of user to find.
+     - `categoryID` (string): ID of category to retrieve stack.
 
-- `DELETE /v1/ /user/:userID/stack/:stackID`
+- `DELETE /v1/stacks/:stackID`
 
    **Arguments:**
-   - URL Params:
-    - `userID` (string): ID of user to delete stack from.
-    - `categoryID` (string): ID of the category to delete stack from.
+  - URL Params:
+    - `stackID` (string): ID of the stack to delete.
+  - Body:
+    - `userID` (string): ID of user to find.
+    - `categoryID` (string): ID of category to find.
+
+- `POST /v1/cards`
+
+   **Arguments:**
+   - Body:
+     - `userID` (string): ID of user to find.
+     - `categoryID` (string): ID of category to find.
+     - `stackID` (string): ID of stack to find.
+     - `newCards` (string): array of card objects. Each object is represented as { "content": "a question based on stack title", "answer": "answer to question of content property" }.
+
+- `GET /v1/cards`
+- Finds all cards for user
+   - Body:
+     - `userID` (string): ID of user to find.
+     - `categoryID` (string): ID of category to find.
+     - `stackID` (string): ID of stack to find.
+
+- `DELETE /v1/cards/:cardID`
+
+   **Arguments:**
+  - URL Params:
+    - `cardID` (string): ID of the card to delete.
+  - Body:
+    - `userID` (string): ID of user to find.
+    - `categoryID` (string): ID of category to find.
+    - `stackID` (string): ID of stack to find.
 
 Make sure to include the necessary request headers and body parameters as specified in the API documentation.
 
