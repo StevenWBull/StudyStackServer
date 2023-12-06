@@ -182,7 +182,6 @@ describe('Categories Routes', () => {
                 .set('Authorization', `Bearer ${token}`)
                 .send({ userID: passVars.id })
                 .end((err, res) => {
-                    console.log(err);
                     if (err) {
                         expect(res).to.have.status(404);
                     } else {
