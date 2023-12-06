@@ -105,13 +105,13 @@ Standard JWT authorization is used for this application. You must send the `Auth
 
 - `GET /v1/categories`
 - Finds all categories for user.
-   **Arguments:**
+  **Arguments:**
    - Body:
      - `userID` (string): ID of user to find categories.
 
 - `GET /v1/categories/:categoryID`
 - Finds a single category for user.
-   **Arguments:**
+  **Arguments:**
   - URL Params:
     - `categoryID` (string): ID of the category to find.
   - Body:
