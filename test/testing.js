@@ -13,8 +13,7 @@ const user = {
 
 const passVars = {};
 
-const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGMwYWRiY2MzMTBjMWFhNzA1NzNlOSIsImVtYWlsIjoic3RldmVuQG5vLmNvbSIsImZpcnN0TmFtZSI6IlN0ZXZlbiIsImxhc3ROYW1lIjoiQnVsbCIsImlhdCI6MTcwMTMwNzQzOCwiZXhwIjoxNzAxOTEyMjM4fQ.QXAGAyglrHEGBi068sHt9U64z2JQjihswplcGjIkvuE';
+const token = process.env.JWT_TESTING_TOKEN;
 
 //Clean database before each run
 const cleanup = async (req, res) => {
