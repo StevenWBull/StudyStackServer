@@ -133,8 +133,8 @@ Standard JWT authorization is used for this application. You must send the `Auth
      - `categoryID` (string): ID of category to find.
      - `newStacks` (string): array of stack objects. Each object is represented as { "title": "stack title" }.
     
-- `GET /v1/stacks`\
-- Finds all stacks for user
+- `GET /v1/stacks`
+- Finds all stacks for user\
    **Arguments:**
   - Body:
      - `userID` (string): ID of user to find.
@@ -159,7 +159,8 @@ Standard JWT authorization is used for this application. You must send the `Auth
      - `newCards` (string): array of card objects. Each object is represented as { "content": "a question based on stack title", "answer": "answer to question of content property" }.
 
 - `GET /v1/cards`
-- Finds all cards for user
+- Finds all cards for user\
+  **Arguments:**
    - Body:
      - `userID` (string): ID of user to find.
      - `categoryID` (string): ID of category to find.
