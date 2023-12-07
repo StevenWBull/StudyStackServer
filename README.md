@@ -1,5 +1,11 @@
 # StudyStackApp
 
+IMPORTANT: ALL FILES IN THIS REPOSITORY WERE EQUALLY WRITTEN, TESTED, AND DEBUGGED BY THE BACK END TEAM LISTED BELOW:
+
+- Raymond Lee
+- Jordan Tyler
+- Steven Bull
+
 StudyStackApp is a Node.js/Express backend application for creating and managing stacks to help users learn and retain information effectively.
 
 ## Table of Contents
