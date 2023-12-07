@@ -184,6 +184,18 @@ Standard JWT authorization is used for this application. You must send the `Auth
 
 Make sure to include the necessary request headers and body parameters as specified in the API documentation.
 
+## Endpoint Testing
+
+The Mocha testing framework and Chai assertion library were used to validate that all endpoints work as expected.
+
+When the tests are run the database is first cleaned up to avoid attempting to register an existing user. Then each of the endpoints is tested to ensure that the appropriate status code is returned.
+
+To configure the tests:
+1. Run the server using `npm run start`.
+2. Use a REST API Client such as Postman or ThunderClient to register a new user using the `POST /v1/auth/register` endpoint. Check above endpoint documentation for details.
+3. Take the token generated for that user and assign it the value `JWT_TESTING_TOKEN` in your local `.env` file.
+4. Then run the command: `npm run test`.
+
 ## Contributing
 
 Contributions to this project are welcome. To contribute, follow these steps:
