@@ -104,13 +104,13 @@ Standard JWT authorization is used for this application. You must send the `Auth
        
 
 - `GET /v1/categories`
-- Finds all categories for user
+- Finds all categories for user\
   **Arguments:**
    - Body:
      - `userID` (string): ID of user to find categories.
 
 - `GET /v1/categories/:categoryID`
-- Finds a single category for user
+- Finds a single category for user\
   **Arguments:**
   - URL Params:
     - `categoryID` (string): ID of the category to find.
@@ -126,14 +126,14 @@ Standard JWT authorization is used for this application. You must send the `Auth
   - Body:
     - `userID` (string): ID of user to find category.
 
-- `POST /v1/stacks`
+- `POST /v1/stacks`\
    **Arguments:**
    - Body:
      - `userID` (string): ID of user to find.
      - `categoryID` (string): ID of category to find.
      - `newStacks` (string): array of stack objects. Each object is represented as { "title": "stack title" }.
     
-- `GET /v1/stacks`
+- `GET /v1/stacks`\
 - Finds all stacks for user
    **Arguments:**
   - Body:
